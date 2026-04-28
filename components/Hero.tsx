@@ -12,12 +12,17 @@ export default function Hero() {
 
         {/* Copy */}
         <div>
-          <p
-            className="text-xs font-semibold uppercase tracking-[0.14em]"
-            style={{ color: "var(--text-muted)" }}
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold"
+            style={{
+              background: "rgba(79,82,255,0.08)",
+              borderColor: "rgba(79,82,255,0.15)",
+              color: "var(--brand)",
+            }}
           >
-            Automatización de citas por WhatsApp
-          </p>
+            <span className="h-1.5 w-1.5 rounded-full bg-current" />
+            Gestión de citas por WhatsApp
+          </span>
 
           <h1
             className="mt-5 text-[clamp(2.4rem,5.5vw,4.25rem)] font-extrabold leading-[1.03] tracking-[-0.04em]"
@@ -40,14 +45,14 @@ export default function Hero() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="#precios"
-              className="inline-flex items-center justify-center rounded-lg bg-brand-gradient px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
             >
               Empezar gratis
             </a>
             <a
               href="#como-funciona"
-              className="inline-flex items-center gap-2 px-2 py-3.5 text-sm font-medium transition-colors hover:opacity-70"
-              style={{ color: "var(--text-secondary)" }}
+              className="inline-flex items-center gap-2 rounded-full border px-5 py-3.5 text-sm font-medium transition-colors hover:opacity-70"
+              style={{ borderColor: "var(--border)", color: "var(--text-primary)" }}
             >
               Ver cómo funciona
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>

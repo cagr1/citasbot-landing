@@ -67,7 +67,7 @@ export default function WhatsAppMock() {
                   <div className="inline-block align-top">
                     {message.content.map((line) => {
                       const isCalendar = line === "Martes 3:00 PM";
-                      const isReminder = line === "Recibiras recordatorio";
+                      const isReminder = line === "Recibirás recordatorio";
 
                       if (isCalendar || isReminder) {
                         return (

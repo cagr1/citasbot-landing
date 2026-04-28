@@ -9,7 +9,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CitasBot - Gestion de citas por WhatsApp",
+  title: "CitasBot - Gestión de citas por WhatsApp",
   description: "Automatiza tus citas y recordatorios por WhatsApp. Sin apps extra para tus clientes.",
 };
 

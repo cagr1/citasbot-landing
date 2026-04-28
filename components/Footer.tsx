@@ -2,7 +2,7 @@ import Brand from "@/components/Brand";
 
 const footerLinks = [
   { href: "#features", label: "Features" },
-  { href: "#como-funciona", label: "Como funciona" },
+  { href: "#como-funciona", label: "Cómo funciona" },
   { href: "#precios", label: "Precios" },
 ];
 
@@ -30,7 +30,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-6 flex flex-col gap-3 text-sm md:flex-row md:items-center md:justify-between">
-          <div style={{ color: "var(--text-muted)" }}>Politica de privacidad · Terminos de servicio</div>
+          <div style={{ color: "var(--text-muted)" }}>Política de privacidad · Términos de servicio</div>
           <a
             href="https://www.carlosgallardo.dev/"
             target="_blank"

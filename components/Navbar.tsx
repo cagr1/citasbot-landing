@@ -19,9 +19,7 @@ export default function Navbar() {
     <header
       className="sticky top-0 z-50 border-b"
       style={{
-        background: "var(--bg-nav)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        background: "var(--bg)",
         borderColor: "var(--border)",
       }}
     >
@@ -87,7 +85,7 @@ export default function Navbar() {
       {menuOpen && (
         <div
           className="border-t px-6 py-4 md:hidden"
-          style={{ borderColor: "var(--border)", background: "var(--bg-nav)", backdropFilter: "blur(12px)" }}
+          style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
           <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
