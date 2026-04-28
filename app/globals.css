@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f7f8fc;
+  --bg-elevated: #ffffff;
+  --bg-nav: rgba(255, 255, 255, 0.88);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --text-primary: #111218;
+  --text-secondary: #44455c;
+  --text-muted: #8f90a6;
+  --text-inverse: #ffffff;
+  --wa-chat: #ece5dd;
+  --brand: #4f52ff;
+}
+
+.dark {
+  --bg: #0c0d12;
+  --bg-subtle: #111218;
+  --bg-elevated: #1a1b24;
+  --bg-nav: rgba(12, 13, 18, 0.88);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --text-primary: #ededf2;
+  --text-secondary: #8f90a6;
+  --text-muted: #5c5d72;
+  --text-inverse: #111218;
+  --wa-chat: #161720;
+  --brand: #7b7fff;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Use gradient ONLY where explicitly needed */
+.gradient-text {
+  background: linear-gradient(135deg, #4f52ff 0%, #8b3cf7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scroll entry — premium cubic-bezier */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children inside .stagger-children */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stagger-children.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0ms; }
+.stagger-children.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 80ms; }
+.stagger-children.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 160ms; }
+.stagger-children.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 240ms; }
+.stagger-children.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 320ms; }
+.stagger-children.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 400ms; }
