@@ -28,7 +28,7 @@ export async function sendContactEmail(
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: "CitasBot <noreply@citasbot.app>",
-      to: "hello@citasbot.com",
+      to: "hello@citasbot.app",
       replyTo: email,
       subject: `Nuevo contacto de ${name}`,
       text: `Nombre: ${name}\nCorreo: ${email}\n\n${message}`,
@@ -36,6 +36,6 @@ export async function sendContactEmail(
     return { success: true, message: "Mensaje enviado. Te contactamos en menos de 24 horas." };
   } catch (error) {
     console.error("[contact-form:resend-error]", error);
-    return { success: false, message: "Error al enviar. Escríbenos a hello@citasbot.com." };
+    return { success: false, message: "Error al enviar. Escríbenos a hello@citasbot.app." };
   }
 }

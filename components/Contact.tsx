@@ -63,11 +63,11 @@ export default function Contact() {
               <p>
                 También puedes escribirnos directamente a{" "}
                 <a
-                  href="mailto:hello@citasbot.com"
+                  href="mailto:hello@citasbot.app"
                   className="font-semibold transition-colors hover:opacity-80"
                   style={{ color: "var(--brand)" }}
                 >
-                  hello@citasbot.com
+                  hello@citasbot.app
                 </a>
               </p>
               <p style={{ color: "var(--text-muted)" }}>
