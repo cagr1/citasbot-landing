@@ -87,13 +87,13 @@ export default function Pricing() {
 
         {/* Cards */}
         <div className="mt-12">
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {plans.map((plan) => (
 
               // Outer shell — 1px gradient border technique from DESIGN.md
               <div
                 key={plan.name}
-                className="relative rounded-3xl p-px"
+                className="relative rounded-2xl p-px"
                 style={{
                   background: shellGradient(plan.popular),
                   boxShadow: plan.popular
@@ -103,14 +103,14 @@ export default function Pricing() {
               >
                 {/* Inner glass surface */}
                 <article
-                  className="flex h-full flex-col rounded-[23px] p-7"
+                  className="flex h-full min-h-[360px] flex-col rounded-[15px] p-5 xl:p-6"
                   style={{ background: CARD_BG }}
                 >
                   {/* Badges row */}
-                  <div className="flex items-center gap-2 min-h-[24px]">
+                  <div className="flex min-h-[22px] items-center gap-2">
                     {plan.popular && (
                       <span
-                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em]"
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em]"
                         style={{
                           background: "linear-gradient(135deg, #4f52ff, #8b3cf7)",
                           color: "#fff",
@@ -121,7 +121,7 @@ export default function Pricing() {
                     )}
                     {plan.badge && (
                       <span
-                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] font-medium"
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-medium"
                         style={{
                           background: "rgba(255,255,255,0.06)",
                           color: "rgba(255,255,255,0.4)",
@@ -135,7 +135,7 @@ export default function Pricing() {
 
                   {/* Plan name */}
                   <p
-                    className="mt-5 text-xs font-semibold uppercase tracking-[0.14em]"
+                    className="mt-4 text-[11px] font-semibold uppercase tracking-[0.14em]"
                     style={{ color: "rgba(255,255,255,0.35)" }}
                   >
                     {plan.name}
@@ -143,9 +143,7 @@ export default function Pricing() {
 
                   {/* Price */}
                   <div className="mt-3 flex items-baseline gap-1.5">
-                    <span
-                      className="text-[2.5rem] font-extrabold leading-none tracking-[-0.04em] text-white"
-                    >
+                    <span className="text-4xl font-extrabold leading-none tracking-[-0.04em] text-white">
                       ${plan.price}
                     </span>
                     <span
@@ -158,7 +156,7 @@ export default function Pricing() {
 
                   {/* Description */}
                   <p
-                    className="mt-4 text-xs leading-[1.75]"
+                    className="mt-3 min-h-[42px] text-xs leading-relaxed"
                     style={{ color: "rgba(255,255,255,0.45)" }}
                   >
                     {plan.description}
@@ -166,16 +164,16 @@ export default function Pricing() {
 
                   {/* Divider */}
                   <div
-                    className="my-6 h-px w-full"
+                    className="my-5 h-px w-full"
                     style={{ background: "rgba(255,255,255,0.06)" }}
                   />
 
                   {/* Features */}
-                  <ul className="flex flex-col gap-3">
+                  <ul className="flex flex-col gap-2.5">
                     {plan.features.map((f) => (
                       <li
                         key={f}
-                        className="flex items-center gap-3 text-xs"
+                        className="flex items-center gap-2.5 text-xs"
                         style={{ color: "rgba(255,255,255,0.6)" }}
                       >
                         <span
@@ -200,7 +198,7 @@ export default function Pricing() {
                   {/* CTA — pushed to bottom */}
                   <a
                     href="#"
-                    className="mt-8 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold transition-opacity hover:opacity-80"
+                    className="mt-auto inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-opacity hover:opacity-80"
                     style={
                       plan.popular
                         ? {
