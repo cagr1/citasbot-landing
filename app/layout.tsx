@@ -27,25 +27,27 @@ export const metadata: Metadata = {
   },
 };
 
-function GoogleAnalytics() {
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+function GoogleTagManager() {
+  const tagManagerId = process.env.NEXT_PUBLIC_GTM_ID;
 
-  if (!measurementId || !/^G-[A-Z0-9]+$/.test(measurementId)) {
+  if (!tagManagerId || !/^GTM-[A-Z0-9]+$/.test(tagManagerId)) {
     return null;
   }
 
   return (
     <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-tag-manager" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${measurementId}');
+          window.dataLayer.push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+          });
+          var firstScript = document.getElementsByTagName('script')[0];
+          var tagManagerScript = document.createElement('script');
+          tagManagerScript.async = true;
+          tagManagerScript.src = 'https://www.googletagmanager.com/gtm.js?id=${tagManagerId}';
+          firstScript.parentNode.insertBefore(tagManagerScript, firstScript);
         `}
       </Script>
     </>
@@ -68,9 +70,20 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
+        {process.env.NEXT_PUBLIC_GTM_ID &&
+          /^GTM-[A-Z0-9]+$/.test(process.env.NEXT_PUBLIC_GTM_ID) && (
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+              />
+            </noscript>
+          )}
         {children}
         <Analytics />
-        <GoogleAnalytics />
+        <GoogleTagManager />
       </body>
     </html>
   );

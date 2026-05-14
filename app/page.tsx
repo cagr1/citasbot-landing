@@ -1,4 +1,5 @@
 import CTABanner from "@/components/CTABanner";
+import Contact from "@/components/Contact";
 import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -15,6 +16,7 @@ export default function Home() {
       <HowItWorks />
       <Features />
       <Pricing />
+      <Contact />
       <CTABanner />
       <Footer />
       <WhatsAppFloat />

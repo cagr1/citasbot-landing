@@ -10,7 +10,10 @@ const navLinks = [
   { href: "#como-funciona", label: "Cómo funciona" },
   { href: "#features", label: "Características" },
   { href: "#precios", label: "Precios" },
+  { href: "#contacto", label: "Contacto" },
 ];
+
+const APP_URL = "https://citasbot-whatsapp.vercel.app";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,6 +56,24 @@ export default function Navbar() {
         {/* Right actions */}
         <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
+          <a
+            href={`${APP_URL}/login`}
+            className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium transition-colors"
+            style={{
+              color: "var(--text-secondary)",
+              border: "1px solid var(--border-strong)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--brand)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--border-strong)";
+            }}
+          >
+            Iniciar sesión
+          </a>
           <a
             href="#precios"
             className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
@@ -100,9 +121,17 @@ export default function Navbar() {
               </a>
             ))}
             <a
+              href={`${APP_URL}/login`}
+              onClick={() => setMenuOpen(false)}
+              className="mt-2 inline-flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors"
+              style={{ color: "var(--text-secondary)", border: "1px solid var(--border-strong)" }}
+            >
+              Iniciar sesión
+            </a>
+            <a
               href="#precios"
               onClick={() => setMenuOpen(false)}
-              className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brand-gradient px-5 py-2.5 text-sm font-medium text-white"
+              className="mt-1 inline-flex w-full items-center justify-center rounded-full bg-brand-gradient px-5 py-2.5 text-sm font-medium text-white"
             >
               Empezar gratis
             </a>
