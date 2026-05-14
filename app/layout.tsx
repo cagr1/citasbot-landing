@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -9,9 +11,46 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CitasBot - Gestión de citas por WhatsApp",
+  metadataBase: new URL("https://citasbot.app"),
+  title: "CitasBot - Gestion de citas por WhatsApp",
   description: "Automatiza tus citas y recordatorios por WhatsApp. Sin apps extra para tus clientes.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "CitasBot - Gestion de citas por WhatsApp",
+    description: "Automatiza tus citas y recordatorios por WhatsApp. Sin apps extra para tus clientes.",
+    url: "https://citasbot.app",
+    siteName: "CitasBot",
+    locale: "es_EC",
+    type: "website",
+  },
 };
+
+function GoogleAnalytics() {
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
+  if (!measurementId || !/^G-[A-Z0-9]+$/.test(measurementId)) {
+    return null;
+  }
+
+  return (
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${measurementId}');
+        `}
+      </Script>
+    </>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -28,7 +67,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        <Analytics />
+        <GoogleAnalytics />
+      </body>
     </html>
   );
 }
