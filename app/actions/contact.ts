@@ -34,7 +34,8 @@ export async function sendContactEmail(
       text: `Nombre: ${name}\nCorreo: ${email}\n\n${message}`,
     });
     return { success: true, message: "Mensaje enviado. Te contactamos en menos de 24 horas." };
-  } catch {
+  } catch (error) {
+    console.error("[contact-form:resend-error]", error);
     return { success: false, message: "Error al enviar. Escríbenos a hello@citasbot.com." };
   }
 }
