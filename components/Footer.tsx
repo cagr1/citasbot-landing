@@ -25,12 +25,29 @@ export default function Footer() {
           </div>
 
           <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-            © 2025 CitasBot
+            © 2026 CitasBot
           </p>
         </div>
 
         <div className="mt-6 flex flex-col gap-3 text-sm md:flex-row md:items-center md:justify-between">
-          <div style={{ color: "var(--text-muted)" }}>Política de privacidad · Términos de servicio</div>
+          <div className="flex flex-wrap gap-4" style={{ color: "var(--text-muted)" }}>
+            <a
+              href="/privacy-policy.html"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-brand-from"
+            >
+              Política de privacidad
+            </a>
+            <a
+              href="/terms.html"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-brand-from"
+            >
+              Términos de servicio
+            </a>
+          </div>
           <a
             href="https://www.carlosgallardo.dev/"
             target="_blank"

@@ -86,14 +86,14 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div className="mt-12 -mx-6 px-6 lg:mx-0 lg:px-0">
-          <div className="flex gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+        <div className="mt-12">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {plans.map((plan) => (
 
               // Outer shell — 1px gradient border technique from DESIGN.md
               <div
                 key={plan.name}
-                className="relative w-[260px] shrink-0 rounded-3xl p-px lg:w-auto"
+                className="relative rounded-3xl p-px"
                 style={{
                   background: shellGradient(plan.popular),
                   boxShadow: plan.popular
