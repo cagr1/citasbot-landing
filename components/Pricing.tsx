@@ -7,38 +7,32 @@ const plans = [
   {
     name: "Free",
     price: 0,
+    annualPrice: null,
     description: "Para negocios que quieren empezar sin costo.",
-    badge: "14 días trial",
-    features: ["10 citas por mes", "45 mensajes WhatsApp", "1 usuario"],
+    badge: null,
+    features: ["20 citas por mes", "60 mensajes WhatsApp", "1 usuario"],
     cta: "Empezar gratis",
     popular: false,
   },
   {
     name: "Starter",
-    price: 19,
+    price: 12,
+    annualPrice: 120,
     description: "Para negocios que quieren crecer en serio.",
     badge: null,
-    features: ["40 citas por mes", "120 mensajes WhatsApp", "2 usuarios"],
+    features: ["80 citas por mes", "240 mensajes WhatsApp", "2 usuarios"],
     cta: "Elegir plan",
     popular: false,
   },
   {
     name: "Pro",
-    price: 29,
+    price: 25,
+    annualPrice: 250,
     description: "El más elegido por negocios en crecimiento.",
     badge: null,
-    features: ["80 citas por mes", "240 mensajes WhatsApp", "5 usuarios"],
+    features: ["250 citas por mes", "750 mensajes WhatsApp", "5 usuarios"],
     cta: "Elegir plan",
     popular: true,
-  },
-  {
-    name: "Business",
-    price: 39,
-    description: "Para equipos con alto volumen de citas.",
-    badge: null,
-    features: ["150 citas por mes", "450 mensajes WhatsApp", "10 usuarios"],
-    cta: "Elegir plan",
-    popular: false,
   },
 ];
 
@@ -87,7 +81,7 @@ export default function Pricing() {
 
         {/* Cards */}
         <div className="mt-12">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan) => (
 
               // Outer shell — 1px gradient border technique from DESIGN.md
@@ -153,6 +147,14 @@ export default function Pricing() {
                       /mes
                     </span>
                   </div>
+                  {plan.annualPrice && (
+                    <p
+                      className="mt-1 text-xs"
+                      style={{ color: "rgba(255,255,255,0.35)" }}
+                    >
+                      ${plan.annualPrice}/año
+                    </p>
+                  )}
 
                   {/* Description */}
                   <p
