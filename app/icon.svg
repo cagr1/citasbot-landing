@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">CitasBot</title>
+  <g>
+  <path fill="#C8471F" d="M244 112h24v37h-24z"/>
+  <circle fill="#C8471F" cx="256" cy="80" r="38"/>
+  <path fill="#C8471F" d="M177 145h158c55 0 100 35 112 88 20 5 33 23 33 45v29c0 22-13 40-33 45-13 38-49 63-92 63h-98l-85 48v-51c-52-4-92-25-107-60-20-5-33-23-33-45v-29c0-22 13-40 33-45 13-53 57-88 112-88z"/>
+  <rect fill="#17181C" x="110" y="203" width="292" height="163" rx="70"/>
+  <path fill="#FAF8F5" d="M156 304v-13a34 34 0 0 1 68 0v13h-22v-13a12 12 0 0 0-24 0v13z"/>
+  <path fill="#FAF8F5" d="M288 304v-13a34 34 0 0 1 68 0v13h-22v-13a12 12 0 0 0-24 0v13z"/>
+</g>
+</svg>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 type BrandProps = {
@@ -8,11 +7,11 @@ type BrandProps = {
 
 const sizes = {
   sm: {
-    icon: "h-9 w-9",
+    icon: 28,
     text: "text-xl",
   },
   md: {
-    icon: "h-11 w-11",
+    icon: 34,
     text: "text-2xl",
   },
 };
@@ -21,17 +20,17 @@ export default function Brand({ href = "/", size = "sm" }: BrandProps) {
   const current = sizes[size];
 
   return (
-    <Link href={href} className="inline-flex items-center gap-3">
-      <Image
-        src="/logo_citasBot.png"
-        alt="CitasBot"
-        width={44}
-        height={44}
-        priority
-        className={`${current.icon} object-contain`}
+    <Link href={href} aria-label="CitasBot, inicio" className="inline-flex items-center gap-2">
+      {/* eslint-disable-next-line @next/next/no-img-element -- SVG estático */}
+      <img
+        src="/citasbot-simbolo.svg"
+        alt=""
+        aria-hidden
+        width={current.icon}
+        height={current.icon}
       />
       <span
-        className={`${current.text} font-extrabold tracking-[-0.04em] transition-colors`}
+        className={`${current.text} font-semibold tracking-[-0.02em]`}
         style={{ color: "var(--text-primary)" }}
       >
         CitasBot
