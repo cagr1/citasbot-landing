@@ -65,6 +65,14 @@ const formatters: Record<Region, Intl.NumberFormat> = {
   }),
 };
 
+// es-419 escribe "USD 12"; "US$" se lee mejor y no se confunde con el peso local.
+function formatPrice(region: Region, value: number) {
+  return formatters[region]
+    .formatToParts(value)
+    .map((p) => (p.type === "currency" && region === "latam" ? "US$" : p.value))
+    .join("");
+}
+
 // Gradient border shell — from the AI Features Showcase DESIGN.md technique.
 // A 1px wrapper with a gradient background creates a premium hairline frame.
 const CARD_BG = "#15171E";
@@ -89,7 +97,6 @@ function selectPlan(name: PlanName) {
 
 export default function Pricing({ region }: { region: Region }) {
   const ref = useFadeIn<HTMLElement>();
-  const fmt = formatters[region];
 
   return (
     // Section is always dark — independent of light/dark theme
@@ -175,7 +182,7 @@ export default function Pricing({ region }: { region: Region }) {
                   {/* Price */}
                   <div className="mt-3 flex items-baseline gap-1.5">
                     <span className="text-4xl font-extrabold leading-none tracking-[-0.04em] text-white">
-                      {fmt.format(plan.prices[region].monthly)}
+                      {formatPrice(region, plan.prices[region].monthly)}
                     </span>
                     <span
                       className="text-sm"
@@ -197,7 +204,7 @@ export default function Pricing({ region }: { region: Region }) {
                       className="mt-1 text-xs"
                       style={{ color: "rgba(255,255,255,0.35)" }}
                     >
-                      {fmt.format(plan.prices[region].annual ?? 0)}/año
+                      {formatPrice(region, plan.prices[region].annual ?? 0)}/año
                     </p>
                   )}
 

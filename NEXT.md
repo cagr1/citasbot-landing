@@ -4,7 +4,7 @@ Handoff del 2026-10-16. Objetivo: landing de SaaS profesional, sin huella "AI", 
 de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-whatsapp`).
 
 ## Estado
-- Rama `feat/region-demo-legal` (sin push), con los commits `bcf1497` y el del spec 02:
+- Rama `feat/region-demo-legal` (en `origin`), con los commits `bcf1497` y el del spec 02:
   - región por ubicación (`lib/region.ts`): cookie `cb_region` > `x-vercel-ip-country` > `Accept-Language`
   - precios EU 19/39 € + IVA, LATAM USD 12/25
   - CTA "Solicitar demo" con formulario ampliado
@@ -15,7 +15,8 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
 
 ## Siguiente paso
 - Hecho: spec 02 (región invisible, navbar `lg:`) y punto 4 (privacidad y términos para el RGPD).
-- Lo siguiente es el rediseño visual (punto 3), bloqueado por las referencias y capturas. Sin bloqueo: el punto 5.
+- Hecho también el punto 5 (precio LATAM "US$ 12").
+- Lo siguiente es el rediseño visual (punto 3), bloqueado por las referencias y capturas.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como
@@ -42,7 +43,7 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
    - solicitudes de demo ≤ 12 meses; registros técnicos ≤ 90 días
    - avisar a los clientes antes de añadir un subencargado. Añadir Anthropic al lanzar la IA de Pro,
      y Paddle al activar el cobro.
-5. Detalles: el precio LATAM sale como "USD 12" (`Intl` es-419). Valorar "US$ 12".
+5. ~~Precio LATAM como "US$ 12"~~ (hecho).
 
 ## Backend (`../citasbot-whatsapp`, sesión propia, después del landing)
 - **Cobro en €**:
