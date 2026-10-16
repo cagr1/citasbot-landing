@@ -6,12 +6,20 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-plus-jakarta)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       colors: {
         brand: {
-          from: "#4F52FF",
-          to: "#8B3CF7",
+          from: "#C8471F", // transitorio: hasta rediseñar cada sección
+          to: "#C8471F", // transitorio: hasta rediseñar cada sección
+        },
+        paper: "#FAF8F5",
+        ink: "#17181C",
+        line: "#E7E3DC",
+        accent: {
+          DEFAULT: "#C8471F",
+          hover: "#B03E1B",
+          soft: "#E4572E",
         },
         neutral: {
           50: "#F8F9FF",
@@ -29,11 +37,13 @@ const config: Config = {
         wa: "#25D366",
       },
       backgroundImage: {
-        "brand-gradient": "linear-gradient(135deg, #4F52FF 0%, #8B3CF7 100%)",
+        // transitorio: hasta rediseñar cada sección
+        "brand-gradient": "linear-gradient(#C8471F, #C8471F)",
       },
       boxShadow: {
         card: "0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04)",
-        "card-hover": "0 4px 12px 0 rgba(79,82,255,0.12)",
+        // transitorio: hasta rediseñar cada sección
+        "card-hover": "0 4px 12px 0 rgba(23,24,28,0.08)",
       },
       keyframes: {
         messageIn: {

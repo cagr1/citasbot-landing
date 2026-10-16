@@ -19,7 +19,12 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
 - Hecho: analítica sin cookies. Se quitaron GTM y el banner. Vercel Analytics registra los eventos
   `demo_click` (con `location` y `plan`), `whatsapp_click` y `form_submit`. El correo de cada demo
   incluye el origen (UTM y referrer). Volver a GA4/GTM solo con anuncios de pago, y entonces con banner y CSP.
-- Lo siguiente es el rediseño visual (punto 3), bloqueado por las referencias y capturas.
+- Rediseño en curso en la rama `feat/rediseno-landing` (sale de `feat/region-demo-legal`, PR #1 sin fusionar).
+  Dirección aprobada en `docs/direccion-visual.md`: papel, tinta, acento terracota, Instrument Sans y `motion`.
+  - Hecho: base visual (tokens, fuente, sin modo oscuro), navbar y hero con el chat animado.
+  - Siguiente: "Cómo funciona" con sección fijada al scroll (sustituye a HowItWorks y Features); luego el bento,
+    precios, la demo en bloque oscuro, FAQ y pie.
+  - Transitorio: `brand-gradient` apunta a terracota sólida hasta rediseñar cada sección.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como

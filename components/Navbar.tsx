@@ -1,10 +1,9 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Brand from "@/components/Brand";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
   { href: "#como-funciona", label: "Cómo funciona" },
@@ -15,15 +14,26 @@ const navLinks = [
 
 const APP_URL = "https://citasbot-whatsapp.vercel.app";
 
+const linkClass =
+  "text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors";
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header
-      className="sticky top-0 z-50 border-b"
+      className="sticky top-0 z-50 border-b backdrop-blur"
       style={{
-        background: "var(--bg)",
-        borderColor: "var(--border)",
+        background: "var(--bg-nav)",
+        borderColor: scrolled ? "var(--border)" : "transparent",
       }}
     >
       {/* Desktop */}
@@ -31,22 +41,12 @@ export default function Navbar() {
 
         <Brand />
 
-        {/* Nav links — weight 400, hover background (Aceternity pattern) */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="whitespace-nowrap rounded px-3 py-1.5 text-sm font-normal transition-colors duration-150"
-              style={{ color: "var(--text-secondary)" }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--bg-subtle)";
-                (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "transparent";
-                (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
-              }}
+              className={`whitespace-nowrap text-sm font-normal ${linkClass}`}
             >
               {link.label}
             </a>
@@ -54,23 +54,10 @@ export default function Navbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="hidden items-center gap-2 lg:flex">
-          <ThemeToggle />
+        <div className="hidden items-center gap-5 lg:flex">
           <a
             href={`${APP_URL}/login`}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition-colors"
-            style={{
-              color: "var(--text-secondary)",
-              border: "1px solid var(--border-strong)",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
-              (e.currentTarget as HTMLElement).style.borderColor = "var(--brand)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
-              (e.currentTarget as HTMLElement).style.borderColor = "var(--border-strong)";
-            }}
+            className={`whitespace-nowrap text-sm font-normal ${linkClass}`}
           >
             Iniciar sesión
           </a>
@@ -78,10 +65,7 @@ export default function Navbar() {
             href="#contacto"
             data-track="demo_click"
             data-track-location="navbar"
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-brand-gradient px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            style={{
-              boxShadow: "rgba(0,0,0,0.1) 0px 1px 3px 0px, rgba(0,0,0,0.06) 0px 1px 2px -1px",
-            }}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-sm font-medium text-white hover:bg-black"
           >
             Solicitar demo
           </a>
@@ -89,15 +73,11 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <div className="flex items-center gap-2 lg:hidden">
-          <ThemeToggle />
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Abrir menú"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors"
-            style={{ color: "var(--text-secondary)" }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--bg-subtle)")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-subtle)]"
           >
             <Icon icon={menuOpen ? "lucide:x" : "lucide:menu"} className="h-4 w-4" />
           </button>
@@ -116,8 +96,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="rounded px-3 py-2 text-sm font-normal transition-colors"
-                style={{ color: "var(--text-secondary)" }}
+                className={`rounded px-3 py-2 text-sm font-normal ${linkClass}`}
               >
                 {link.label}
               </a>
@@ -125,8 +104,7 @@ export default function Navbar() {
             <a
               href={`${APP_URL}/login`}
               onClick={() => setMenuOpen(false)}
-              className="mt-2 inline-flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors"
-              style={{ color: "var(--text-secondary)", border: "1px solid var(--border-strong)" }}
+              className={`rounded px-3 py-2 text-sm font-normal ${linkClass}`}
             >
               Iniciar sesión
             </a>
@@ -135,7 +113,7 @@ export default function Navbar() {
               data-track="demo_click"
               data-track-location="navbar_mobile"
               onClick={() => setMenuOpen(false)}
-              className="mt-1 inline-flex w-full items-center justify-center rounded-full bg-brand-gradient px-5 py-2.5 text-sm font-medium text-white"
+              className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-white hover:bg-black"
             >
               Solicitar demo
             </a>

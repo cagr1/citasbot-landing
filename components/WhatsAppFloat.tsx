@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 
-// Ecuador: +593 · strip leading zero from local number
-const WA_NUMBER = "593984420987";
-const WA_MESSAGE = encodeURIComponent(
-  "Hola, me interesa saber más sobre CitasBot para mi negocio."
-);
-const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
+import { WA_URL } from "@/lib/contact";
 
 export default function WhatsAppFloat() {
   const [hovered, setHovered] = useState(false);
