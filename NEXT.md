@@ -16,12 +16,18 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
 ## Siguiente paso
 - Hecho: spec 02 (región invisible, navbar `lg:`) y punto 4 (privacidad y términos para el RGPD).
 - Hecho también el punto 5 (precio LATAM "US$ 12").
+- Hecho: analítica sin cookies. Se quitaron GTM y el banner. Vercel Analytics registra los eventos
+  `demo_click` (con `location` y `plan`), `whatsapp_click` y `form_submit`. El correo de cada demo
+  incluye el origen (UTM y referrer). Volver a GA4/GTM solo con anuncios de pago, y entonces con banner y CSP.
 - Lo siguiente es el rediseño visual (punto 3), bloqueado por las referencias y capturas.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como
       `[PENDIENTE]` en `app/aviso-legal/page.tsx`. Conviene completarlos antes de desplegar.
 - [ ] `[PENDIENTE]` en `public/privacy-policy.html`: representante UE (art. 27) y región de Supabase.
+- [ ] Vercel: activar Web Analytics en el proyecto y borrar la variable `NEXT_PUBLIC_GTM_ID`.
+      Los eventos propios creo que exigen el plan Pro (sin verificar).
+- [ ] Usar enlaces con UTM en todo lo que se comparta (firma de WhatsApp, LinkedIn, anuncios).
 - [ ] Que un abogado de RGPD revise privacidad y términos (borrador sin verificar en fuentes oficiales).
       Faltan también la ley aplicable y la jurisdicción en `terms.html`.
 - [ ] Referencias (2–3 landings) y capturas reales del dashboard y del flujo de WhatsApp. Bloquean el rediseño visual.

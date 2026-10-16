@@ -252,6 +252,9 @@ export default function Pricing({ region }: { region: Region }) {
                   {/* CTA — pushed to bottom */}
                   <a
                     href="#contacto"
+                    data-track="demo_click"
+                    data-track-location="pricing"
+                    data-track-plan={plan.name}
                     onClick={() => selectPlan(plan.name)}
                     className="mt-auto inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-opacity hover:opacity-80"
                     style={

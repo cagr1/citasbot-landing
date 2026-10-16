@@ -1,5 +1,4 @@
 import Brand from "@/components/Brand";
-import { ConfigureCookiesButton } from "@/components/CookieConsent";
 
 const footerLinks = [
   { href: "#features", label: "Features" },
@@ -54,7 +53,6 @@ export default function Footer() {
             <a href="/cookies" className="transition-colors hover:text-brand-from">
               Cookies
             </a>
-            <ConfigureCookiesButton className="transition-colors hover:text-brand-from" />
           </div>
           <a
             href="https://www.carlosgallardo.dev/"

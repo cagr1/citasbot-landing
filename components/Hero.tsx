@@ -45,6 +45,8 @@ export default function Hero() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="#contacto"
+              data-track="demo_click"
+              data-track-location="hero"
               className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
             >
               Solicitar demo

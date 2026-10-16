@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import CookieConsent from "@/components/CookieConsent";
+import TrackClicks from "@/components/TrackClicks";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -46,7 +46,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         {children}
         <Analytics />
-        <CookieConsent />
+        <TrackClicks />
       </body>
     </html>
   );

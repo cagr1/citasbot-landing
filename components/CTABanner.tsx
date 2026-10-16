@@ -30,6 +30,8 @@ export default function CTABanner() {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a
             href="#contacto"
+            data-track="demo_click"
+            data-track-location="cta_banner"
             className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
           >
             Solicitar demo

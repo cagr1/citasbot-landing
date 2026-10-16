@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 
-import { ConfigureCookiesButton } from "@/components/CookieConsent";
-
 export const metadata: Metadata = {
   title: "Política de cookies - CitasBot",
   alternates: { canonical: "/cookies" },
@@ -13,16 +11,8 @@ const items = [
     desc: "Preferencia: guarda la región y moneda que eliges (España / Europa o Latinoamérica). Duración: 1 año. Propia. Exenta de consentimiento, porque la solicita el propio usuario.",
   },
   {
-    name: "cb_consent (localStorage)",
-    desc: "Guarda tu decisión sobre las cookies (aceptadas o rechazadas). Propia. No se envía a ningún servidor.",
-  },
-  {
-    name: "Google Tag Manager / Google Analytics",
-    desc: "Analítica. De terceros (Google). Solo se cargan si aceptas las cookies.",
-  },
-  {
     name: "Vercel Analytics",
-    desc: "Medición de visitas agregada. No usa cookies.",
+    desc: "Estadísticas agregadas de visitas y de clics en los botones principales. No usa cookies ni guarda nada en tu navegador. Proveedor: Vercel Inc.",
   },
 ];
 
@@ -38,6 +28,10 @@ export default function Cookies() {
         </a>
         <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">Política de cookies</h1>
 
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          Esta web no usa cookies de analítica ni de publicidad, por eso no te pedimos consentimiento. Solo usa lo siguiente:
+        </p>
+
         <ul className="space-y-4">
           {items.map((i) => (
             <li key={i.name}>
@@ -49,14 +43,6 @@ export default function Cookies() {
           ))}
         </ul>
 
-        <section className="space-y-2">
-          <h2 className="text-xl font-bold">Retirar el consentimiento</h2>
-          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            Puedes cambiar tu decisión en cualquier momento con el botón siguiente o desde el enlace
-            «Configurar cookies» del pie de página.
-          </p>
-          <ConfigureCookiesButton className="rounded-full px-5 py-2 text-sm font-semibold underline" />
-        </section>
       </div>
     </main>
   );

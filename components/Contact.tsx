@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { track } from "@vercel/analytics";
 import { useFormStatus } from "react-dom";
 import { sendContactEmail, type ContactState } from "@/app/actions/contact";
 import type { Region } from "@/lib/region";
@@ -33,6 +34,29 @@ const inputStyle = {
 export default function Contact({ region }: { region: Region }) {
   const [state, action] = useActionState(sendContactEmail, initialState);
   const [plan, setPlan] = useState("");
+  const [origin, setOrigin] = useState({ utm_source: "", utm_medium: "", utm_campaign: "", referrer: "" });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    let referrer = document.referrer;
+    if (referrer) {
+      try {
+        if (new URL(referrer).origin === window.location.origin) referrer = "";
+      } catch {
+        referrer = "";
+      }
+    }
+    setOrigin({
+      utm_source: params.get("utm_source") ?? "",
+      utm_medium: params.get("utm_medium") ?? "",
+      utm_campaign: params.get("utm_campaign") ?? "",
+      referrer,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (state.success) track("form_submit", { region, plan: plan || "-" });
+  }, [state.success]);
 
   useEffect(() => {
     const onPlan = (e: Event) => setPlan((e as CustomEvent<string>).detail);
@@ -230,6 +254,10 @@ export default function Contact({ region }: { region: Region }) {
                 </div>
 
                 <input type="hidden" name="region" value={region} />
+                <input type="hidden" name="utm_source" value={origin.utm_source} />
+                <input type="hidden" name="utm_medium" value={origin.utm_medium} />
+                <input type="hidden" name="utm_campaign" value={origin.utm_campaign} />
+                <input type="hidden" name="referrer" value={origin.referrer} />
 
                 <label
                   className="flex items-start gap-2 text-sm"

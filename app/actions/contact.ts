@@ -15,6 +15,11 @@ export async function sendContactEmail(
   const business = String(formData.get("business") ?? "").trim();
   const plan = String(formData.get("plan") ?? "").trim();
   const region = formData.get("region") === "eu" ? "ES" : "LATAM";
+  const field = (k: string) => String(formData.get(k) ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, 200);
+  const utm_source = field("utm_source");
+  const utm_medium = field("utm_medium");
+  const utm_campaign = field("utm_campaign");
+  const referrer = field("referrer");
   const privacy = formData.get("privacy");
 
   if (!name || !email)
@@ -32,6 +37,8 @@ export async function sendContactEmail(
     `Negocio: ${business || "-"}`,
     `Plan: ${plan || "-"}`,
     `Región: ${region}`,
+    `Origen: ${utm_source || "-"} / ${utm_medium || "-"} / ${utm_campaign || "-"}`,
+    `Referrer: ${referrer || "directo"}`,
     "",
     message || "(sin mensaje)",
   ].join("\n");

@@ -76,6 +76,8 @@ export default function Navbar() {
           </a>
           <a
             href="#contacto"
+            data-track="demo_click"
+            data-track-location="navbar"
             className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-brand-gradient px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             style={{
               boxShadow: "rgba(0,0,0,0.1) 0px 1px 3px 0px, rgba(0,0,0,0.06) 0px 1px 2px -1px",
@@ -130,6 +132,8 @@ export default function Navbar() {
             </a>
             <a
               href="#contacto"
+              data-track="demo_click"
+              data-track-location="navbar_mobile"
               onClick={() => setMenuOpen(false)}
               className="mt-1 inline-flex w-full items-center justify-center rounded-full bg-brand-gradient px-5 py-2.5 text-sm font-medium text-white"
             >
