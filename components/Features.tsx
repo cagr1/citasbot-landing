@@ -1,7 +1,7 @@
 "use client";
 
-import { Icon } from "@iconify/react";
 import {
+  AnimatePresence,
   LazyMotion,
   animate,
   domAnimation,
@@ -13,7 +13,7 @@ import {
   useTransform,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import GridFrame from "./GridFrame";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -66,109 +66,76 @@ function CardText({ title, children }: { title: string; children: string }) {
   );
 }
 
-type Appt = {
-  name: string;
-  service: string;
-  col: 0 | 1;
-  top: number;
-  wa: boolean;
-  fresh?: boolean;
-};
-
-const HOUR_H = 48;
-const HOURS = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00"];
-const PROS = ["Dra. Ruiz", "Dr. Méndez"];
-
-const APPTS: Appt[] = [
-  { name: "Laura M.", service: "Limpieza", col: 0, top: 0, wa: true },
-  { name: "Carmen R.", service: "Revisión", col: 1, top: 0, wa: false },
-  { name: "Pedro S.", service: "Revisión", col: 1, top: 1.5, wa: true },
-  { name: "Ana G.", service: "Ortodoncia", col: 0, top: 2, wa: true },
-  { name: "Luis T.", service: "Blanqueamiento", col: 1, top: 3, wa: true },
-];
-
-const FRESH: Appt = { name: "Laura M.", service: "Nueva · 12:30", col: 0, top: 3.5, wa: true, fresh: true };
-
-function Block({ appt, order }: { appt: Appt; order: number }) {
-  const reduce = useReducedMotion();
-  const fresh = appt.fresh;
-  const delay = fresh ? APPTS.length * 0.12 + 0.3 : order * 0.12;
-  return (
-    <m.div
-      initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-      whileInView={{
-        opacity: 1,
-        scale: fresh && !reduce ? [0.9, 1.04, 1] : 1,
-        transition: { duration: fresh ? 0.6 : 0.35, ease: EASE, delay },
-      }}
-      viewport={{ once: true, margin: "-10%" }}
-      className="absolute inset-x-1 overflow-hidden rounded-lg px-2 py-1 text-[11px] leading-tight"
-      style={{
-        top: appt.top * HOUR_H + 4,
-        height: fresh ? 36 : HOUR_H - 8,
-        background: appt.wa ? "#F6E3DA" : "#EEF0F3",
-        borderLeft: appt.wa ? "3px solid var(--accent)" : "3px solid #C9CDD3",
-        color: "var(--ink)",
-      }}
-    >
-      <div className="flex items-center gap-1 font-medium">
-        {appt.wa && <Icon icon="ic:baseline-whatsapp" className="h-[10px] w-[10px] text-[#1F9D55]" />}
-        <span className="truncate">{fresh ? appt.service : `${appt.name} · ${appt.service}`}</span>
-      </div>
-      {fresh && <div className="truncate">{appt.name}</div>}
-    </m.div>
-  );
-}
-
-function DashboardMock() {
-  return (
-    <div className="p-3 text-[11px]">
-      <div className="grid grid-cols-[40px_1fr_1fr] gap-2 pb-2 font-medium">
-        <span />
-        {PROS.map((p) => (
-          <span key={p} className="text-center">
-            {p}
-          </span>
-        ))}
-      </div>
-      <div className="grid grid-cols-[40px_1fr_1fr] gap-2">
-        <div>
-          {HOURS.map((h) => (
-            <div key={h} style={{ height: HOUR_H, color: "var(--text-muted)" }}>
-              {h}
-            </div>
-          ))}
-        </div>
-        {[0, 1].map((col) => (
-          <div
-            key={col}
-            className="relative rounded-md"
-            style={{
-              height: HOUR_H * HOURS.length,
-              backgroundImage:
-                "repeating-linear-gradient(to bottom, transparent 0, transparent 47px, #ECE8E1 47px, #ECE8E1 48px)",
-            }}
-          >
-            {APPTS.map((a, i) => (a.col === col ? <Block key={a.name + a.top} appt={a} order={i} /> : null))}
-            {FRESH.col === col && <Block appt={FRESH} order={APPTS.length} />}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+const SHOTS = [
+  {
+    key: "mensajes",
+    label: "Mensajes",
+    src: "/images/dashboard-mensajes.png",
+    url: "app.citasbot.app/mensajes",
+    alt: "Panel de CitasBot: plantillas de mensajes",
+  },
+  {
+    key: "panel",
+    label: "Panel",
+    src: "/images/dashboard-inicio.png",
+    url: "app.citasbot.app/inicio",
+    alt: "Panel de CitasBot: inicio",
+  },
+] as const;
 
 function AgendaCard() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const visible = useInView(ref, { margin: "-10%" });
+  const [active, setActive] = useState(0);
+  const [stopped, setStopped] = useState(false);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
   const rotateX = useTransform(scrollYProgress, [0, 1], [reduce ? 0 : 18, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [reduce ? 1 : 0.92, 1]);
 
+  useEffect(() => {
+    if (reduce || stopped || !visible) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % SHOTS.length), 5000);
+    return () => clearInterval(id);
+  }, [reduce, stopped, visible]);
+
+  const shot = SHOTS[active];
+
   return (
     <Card index={0} className="flex flex-col lg:col-span-4 lg:row-span-2">
-      <div className="p-6 pb-0">
-        <CardText title="Tu agenda del día">Cada reserva de WhatsApp aparece aquí al momento.</CardText>
+      <div className="flex items-start justify-between gap-4 p-6 pb-0">
+        <CardText title="Tu panel">
+          Tu panel: citas, clientes, pagos y los mensajes que envía el bot.
+        </CardText>
+        <div
+          role="tablist"
+          aria-label="Vista del panel"
+          className="inline-flex shrink-0 rounded-full border border-line bg-white p-1 text-xs"
+        >
+          {SHOTS.map((s, i) => (
+            <button
+              key={s.key}
+              type="button"
+              role="tab"
+              aria-selected={active === i}
+              onClick={() => {
+                setActive(i);
+                setStopped(true);
+              }}
+              className="relative rounded-full px-3 py-1 font-medium"
+              style={{ color: active === i ? "#fff" : "var(--text-primary)" }}
+            >
+              {active === i && (
+                <m.div
+                  layoutId="dashboard-tab"
+                  className="absolute inset-0 rounded-full bg-ink"
+                  transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 32 }}
+                />
+              )}
+              <span className="relative">{s.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
       <div className="relative min-h-0 flex-1 px-6 pb-6 pt-8">
         <m.div
@@ -176,7 +143,7 @@ function AgendaCard() {
           style={{ rotateX, scale, transformPerspective: 1400, transformOrigin: "top center" }}
           className="h-[320px] lg:h-full"
         >
-          <div className="h-full overflow-hidden rounded-xl border border-line bg-[#FBFAF8] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex h-full flex-col overflow-hidden rounded-xl border border-line bg-[#FBFAF8]">
             <div className="flex items-center gap-3 border-b border-line px-3 py-2">
               <div className="flex gap-1.5">
                 {[0, 1, 2].map((i) => (
@@ -187,24 +154,31 @@ function AgendaCard() {
                 className="rounded-md bg-white px-2 py-0.5 text-[11px]"
                 style={{ color: "var(--text-muted)" }}
               >
-                app.citasbot.app/agenda
+                {shot.url}
               </span>
             </div>
-            {/* sustituible por una captura real del dashboard en /images/dashboard.png */}
-            <div className="h-[calc(100%-33px)] overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <DashboardMock />
+            <div role="tabpanel" className="relative min-h-0 flex-1 overflow-hidden">
+              <AnimatePresence initial={false}>
+                <m.div
+                  key={shot.key}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: reduce ? 0 : 0.4 }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    fill
+                    sizes="(min-width:1024px) 640px, 100vw"
+                    className="object-cover"
+                    style={{ objectPosition: "left top" }}
+                  />
+                </m.div>
+              </AnimatePresence>
             </div>
           </div>
-        </m.div>
-        <m.div
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE, delay: 1.3 } }}
-          viewport={{ once: true, margin: "-10%" }}
-          className="absolute right-9 top-1 flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-xs font-medium"
-          style={{ boxShadow: "0 12px 30px -12px rgba(23,24,28,0.25)" }}
-        >
-          <Icon icon="ic:baseline-whatsapp" className="h-3.5 w-3.5 text-[#1F9D55]" />
-          +3 citas hoy por WhatsApp
         </m.div>
       </div>
     </Card>

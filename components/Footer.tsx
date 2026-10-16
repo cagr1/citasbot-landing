@@ -86,8 +86,8 @@ export default function Footer() {
 
         <m.div
           aria-hidden
-          className="mt-12 select-none overflow-hidden text-center text-[19vw] font-medium leading-[0.8] tracking-[-0.05em] lg:mt-16 lg:text-[15rem]"
-          style={{ color: "var(--text-primary)", height: "0.45em" }}
+          className="mt-12 select-none pb-6 overflow-hidden text-center text-[19vw] font-medium leading-[0.8] tracking-[-0.05em] lg:mt-16 lg:text-[15rem]"
+          style={{ color: "var(--text-primary)" }}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}

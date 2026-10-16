@@ -9,7 +9,6 @@ import HowItWorks from "@/components/HowItWorks";
 import Marquee from "@/components/Marquee";
 import Navbar from "@/components/Navbar";
 import Pricing from "@/components/Pricing";
-import StickyCta from "@/components/StickyCta";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { REGION_COOKIE, resolveRegion } from "@/lib/region";
 
@@ -32,7 +31,6 @@ export default async function Home() {
       <Contact region={region} />
       <Faq />
       <Footer />
-      <StickyCta />
       <WhatsAppFloat />
     </main>
   );
