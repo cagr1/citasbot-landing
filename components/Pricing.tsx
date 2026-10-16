@@ -1,40 +1,69 @@
 "use client";
 
 import { Icon } from "@iconify/react";
+import RegionSwitch from "@/components/RegionSwitch";
 import { useFadeIn } from "@/hooks/useFadeIn";
+import type { Region } from "@/lib/region";
 
-const plans = [
+type PlanName = "Free" | "Starter" | "Pro";
+
+const plans: {
+  name: PlanName;
+  prices: Record<Region, { monthly: number; annual: number | null }>;
+  description: string;
+  badge?: string | null;
+  features: string[];
+  popular: boolean;
+}[] = [
   {
     name: "Free",
-    price: 0,
-    annualPrice: null,
+    prices: {
+      eu: { monthly: 0, annual: null },
+      latam: { monthly: 0, annual: null },
+    },
     description: "Para negocios que quieren empezar sin costo.",
-    badge: null,
     features: ["20 citas por mes", "60 mensajes WhatsApp", "1 usuario"],
-    cta: "Empezar gratis",
     popular: false,
   },
   {
     name: "Starter",
-    price: 12,
-    annualPrice: 120,
+    prices: {
+      eu: { monthly: 19, annual: 190 },
+      latam: { monthly: 12, annual: 120 },
+    },
     description: "Para negocios que quieren crecer en serio.",
-    badge: null,
     features: ["80 citas por mes", "240 mensajes WhatsApp", "2 usuarios"],
-    cta: "Elegir plan",
     popular: false,
   },
   {
     name: "Pro",
-    price: 25,
-    annualPrice: 250,
+    prices: {
+      eu: { monthly: 39, annual: 390 },
+      latam: { monthly: 25, annual: 250 },
+    },
     description: "El más elegido por negocios en crecimiento.",
-    badge: null,
-    features: ["250 citas por mes", "750 mensajes WhatsApp", "5 usuarios"],
-    cta: "Elegir plan",
+    features: [
+      "250 citas por mes",
+      "750 mensajes WhatsApp",
+      "5 usuarios",
+      "Asistente IA (próximamente)",
+    ],
     popular: true,
   },
 ];
+
+const formatters: Record<Region, Intl.NumberFormat> = {
+  eu: new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }),
+  latam: new Intl.NumberFormat("es-419", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }),
+};
 
 // Gradient border shell — from the AI Features Showcase DESIGN.md technique.
 // A 1px wrapper with a gradient background creates a premium hairline frame.
@@ -51,8 +80,16 @@ function shellGradient(popular: boolean) {
   return "linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 100%)";
 }
 
-export default function Pricing() {
+function selectPlan(name: PlanName) {
+  try {
+    sessionStorage.setItem("cb_plan", name);
+  } catch {}
+  window.dispatchEvent(new CustomEvent("cb-plan", { detail: name }));
+}
+
+export default function Pricing({ region }: { region: Region }) {
   const ref = useFadeIn<HTMLElement>();
+  const fmt = formatters[region];
 
   return (
     // Section is always dark — independent of light/dark theme
@@ -75,12 +112,16 @@ export default function Pricing() {
           </h2>
           <p className="mt-4 text-lg leading-relaxed"
             style={{ color: "rgba(255,255,255,0.45)" }}>
-            Empieza gratis. Escala solo cuando tu agenda lo exija.
+            Prueba 14 días. Te ayudamos a configurarlo.
           </p>
         </div>
 
+        <div className="mt-8">
+          <RegionSwitch region={region} dark />
+        </div>
+
         {/* Cards */}
-        <div className="mt-12">
+        <div className="mt-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan) => (
 
@@ -138,7 +179,7 @@ export default function Pricing() {
                   {/* Price */}
                   <div className="mt-3 flex items-baseline gap-1.5">
                     <span className="text-4xl font-extrabold leading-none tracking-[-0.04em] text-white">
-                      ${plan.price}
+                      {fmt.format(plan.prices[region].monthly)}
                     </span>
                     <span
                       className="text-sm"
@@ -146,13 +187,21 @@ export default function Pricing() {
                     >
                       /mes
                     </span>
+                    {region === "eu" && plan.prices.eu.monthly > 0 && (
+                      <span
+                        className="text-sm"
+                        style={{ color: "rgba(255,255,255,0.3)" }}
+                      >
+                        + IVA
+                      </span>
+                    )}
                   </div>
-                  {plan.annualPrice && (
+                  {plan.prices[region].annual && (
                     <p
                       className="mt-1 text-xs"
                       style={{ color: "rgba(255,255,255,0.35)" }}
                     >
-                      ${plan.annualPrice}/año
+                      {fmt.format(plan.prices[region].annual ?? 0)}/año
                     </p>
                   )}
 
@@ -199,7 +248,8 @@ export default function Pricing() {
 
                   {/* CTA — pushed to bottom */}
                   <a
-                    href="#"
+                    href="#contacto"
+                    onClick={() => selectPlan(plan.name)}
                     className="mt-auto inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-opacity hover:opacity-80"
                     style={
                       plan.popular
@@ -214,7 +264,7 @@ export default function Pricing() {
                           }
                     }
                   >
-                    {plan.cta}
+                    Solicitar demo
                   </a>
                 </article>
               </div>
@@ -227,6 +277,7 @@ export default function Pricing() {
           style={{ color: "rgba(255,255,255,0.22)" }}
         >
           Todos los planes incluyen dashboard web, soporte por email y acceso a la API de WhatsApp.
+          {region === "eu" && " Precios sin IVA. Facturación a empresas y autónomos."}
         </p>
       </div>
     </section>

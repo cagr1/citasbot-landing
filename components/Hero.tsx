@@ -44,10 +44,10 @@ export default function Hero() {
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href="#precios"
+              href="#contacto"
               className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
             >
-              Empezar gratis
+              Solicitar demo
             </a>
             <a
               href="#como-funciona"
@@ -62,7 +62,7 @@ export default function Hero() {
           </div>
 
           <p className="mt-5 text-sm" style={{ color: "var(--text-muted)" }}>
-            Sin tarjeta de crédito&ensp;·&ensp;Plan gratis disponible&ensp;·&ensp;Activo en minutos
+            Demo de 20 minutos&ensp;·&ensp;Sin permanencia&ensp;·&ensp;Configuración incluida
           </p>
         </div>
 

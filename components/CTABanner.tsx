@@ -29,10 +29,10 @@ export default function CTABanner() {
 
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a
-            href="#precios"
+            href="#contacto"
             className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-7 py-3.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
           >
-            Empezar gratis
+            Solicitar demo
           </a>
           <a
             href="#precios"
@@ -47,7 +47,7 @@ export default function CTABanner() {
         </div>
 
         <p className="mt-6 text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
-          Sin tarjeta de crédito&ensp;·&ensp;Plan gratis disponible&ensp;·&ensp;Cancela cuando quieras
+          Demo de 20 minutos&ensp;·&ensp;Sin permanencia&ensp;·&ensp;Configuración incluida
         </p>
       </div>
     </section>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { sendContactEmail, type ContactState } from "@/app/actions/contact";
+import type { Region } from "@/lib/region";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -13,7 +14,7 @@ function SubmitButton() {
       className="w-full rounded-full px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
       style={{ background: "linear-gradient(135deg, #4F52FF 0%, #8B3CF7 100%)" }}
     >
-      {pending ? "Enviando..." : "Enviar mensaje"}
+      {pending ? "Enviando..." : "Solicitar demo"}
     </button>
   );
 }
@@ -29,8 +30,15 @@ const inputStyle = {
   color: "var(--text-primary)",
 };
 
-export default function Contact() {
+export default function Contact({ region }: { region: Region }) {
   const [state, action] = useActionState(sendContactEmail, initialState);
+  const [plan, setPlan] = useState("");
+
+  useEffect(() => {
+    const onPlan = (e: Event) => setPlan((e as CustomEvent<string>).detail);
+    window.addEventListener("cb-plan", onPlan);
+    return () => window.removeEventListener("cb-plan", onPlan);
+  }, []);
 
   return (
     <section
@@ -56,7 +64,7 @@ export default function Contact() {
               ¿Listo para automatizar tu agenda?
             </h2>
             <p className="mb-8 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Cuéntanos sobre tu negocio y te ayudamos a configurar CitasBot en menos de 24 horas. Sin contrato, sin compromisos.
+              Te escribimos por WhatsApp o email en menos de 24 h.
             </p>
 
             <div className="space-y-3 text-sm" style={{ color: "var(--text-secondary)" }}>
@@ -144,22 +152,103 @@ export default function Contact() {
 
                 <div>
                   <label
+                    htmlFor="contact-phone"
+                    className="mb-1.5 block text-sm font-medium"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    WhatsApp (opcional)
+                  </label>
+                  <input
+                    id="contact-phone"
+                    type="tel"
+                    name="phone"
+                    autoComplete="tel"
+                    placeholder="+34 600 000 000"
+                    className={inputClass}
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-business"
+                    className="mb-1.5 block text-sm font-medium"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Tipo de negocio (opcional)
+                  </label>
+                  <input
+                    id="contact-business"
+                    type="text"
+                    name="business"
+                    placeholder="Clínica, peluquería, gestoría..."
+                    className={inputClass}
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-plan"
+                    className="mb-1.5 block text-sm font-medium"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Plan (opcional)
+                  </label>
+                  <select
+                    id="contact-plan"
+                    name="plan"
+                    value={plan}
+                    onChange={(e) => setPlan(e.target.value)}
+                    className={inputClass}
+                    style={inputStyle}
+                  >
+                    <option value="">Selecciona un plan</option>
+                    <option value="Free">Free</option>
+                    <option value="Starter">Starter</option>
+                    <option value="Pro">Pro</option>
+                    <option value="No lo sé">No lo sé</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
                     htmlFor="contact-message"
                     className="mb-1.5 block text-sm font-medium"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Mensaje
+                    Mensaje (opcional)
                   </label>
                   <textarea
                     id="contact-message"
                     name="message"
-                    required
                     rows={4}
                     placeholder="Cuéntanos sobre tu negocio y cuántas citas manejas al mes..."
                     className={`${inputClass} resize-none`}
                     style={inputStyle}
                   />
                 </div>
+
+                <input type="hidden" name="region" value={region} />
+
+                <label
+                  className="flex items-start gap-2 text-sm"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  <input type="checkbox" name="privacy" required className="mt-1" />
+                  <span>
+                    He leído la{" "}
+                    <a
+                      href="/privacy-policy.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold underline"
+                      style={{ color: "var(--brand)" }}
+                    >
+                      política de privacidad
+                    </a>
+                  </span>
+                </label>
 
                 {state.message && !state.success && (
                   <p className="text-sm" style={{ color: "#ef4444" }}>
