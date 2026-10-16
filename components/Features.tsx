@@ -43,12 +43,12 @@ function Card({
           ? undefined
           : {
               y: -4,
-              boxShadow: "0 20px 40px -20px rgba(23,24,28,0.25)",
+              boxShadow: "0 20px 40px -20px rgba(var(--shadow-color),0.25)",
               transition: { duration: 0.25 },
             }
       }
       viewport={{ once: true, margin: "-10%" }}
-      className={`group relative overflow-hidden rounded-3xl border border-line bg-white ${className}`}
+      className={`group relative overflow-hidden rounded-3xl border border-line bg-surface ${className}`}
     >
       {children}
     </m.article>
@@ -110,7 +110,7 @@ function AgendaCard() {
         <div
           role="tablist"
           aria-label="Vista del panel"
-          className="inline-flex shrink-0 rounded-full border border-line bg-white p-1 text-xs"
+          className="inline-flex shrink-0 rounded-full border border-line bg-surface p-1 text-xs"
         >
           {SHOTS.map((s, i) => (
             <button
@@ -123,7 +123,7 @@ function AgendaCard() {
                 setStopped(true);
               }}
               className="relative rounded-full px-3 py-1 font-medium"
-              style={{ color: active === i ? "#fff" : "var(--text-primary)" }}
+              style={{ color: active === i ? "var(--on-ink)" : "var(--text-primary)" }}
             >
               {active === i && (
                 <m.div
@@ -143,7 +143,7 @@ function AgendaCard() {
           style={{ rotateX, scale, transformPerspective: 1400, transformOrigin: "top center" }}
           className="h-[320px] lg:h-full"
         >
-          <div className="flex h-full flex-col overflow-hidden rounded-xl border border-line bg-[#FBFAF8]">
+          <div className="flex h-full flex-col overflow-hidden rounded-xl border border-line bg-[var(--frame)]">
             <div className="flex items-center gap-3 border-b border-line px-3 py-2">
               <div className="flex gap-1.5">
                 {[0, 1, 2].map((i) => (
@@ -151,7 +151,7 @@ function AgendaCard() {
                 ))}
               </div>
               <span
-                className="rounded-md bg-white px-2 py-0.5 text-[11px]"
+                className="rounded-md bg-surface px-2 py-0.5 text-[11px]"
                 style={{ color: "var(--text-muted)" }}
               >
                 {shot.url}
@@ -326,7 +326,7 @@ function ScheduleCard() {
 }
 
 const AVATARS = [
-  { initials: "AR", bg: "var(--ink)", color: "#fff" },
+  { initials: "AR", bg: "#17181C", color: "#fff" },
   { initials: "MP", bg: "var(--accent)", color: "#fff" },
   { initials: "LT", bg: "#E8DCC8", color: "var(--ink)" },
 ];

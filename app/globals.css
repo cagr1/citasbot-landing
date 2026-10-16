@@ -18,6 +18,45 @@
   --ink: #17181c;
   --accent: #c8471f;
   --accent-soft: #e4572e;
+  --surface: #ffffff;
+  --on-ink: #ffffff;
+  --block: #17181c;
+  --nav-bg: rgba(255, 255, 255, 0.75);
+  --nav-bg-solid: rgba(255, 255, 255, 0.92);
+  --dot: rgba(23, 24, 28, 0.09);
+  --shadow-color: 23, 24, 28;
+  --frame: #fbfaf8;
+  --phone-bezel: #121316;
+  --phone-ring: rgba(255,255,255,0.06);
+}
+
+.dark {
+  --bg: #141311;
+  --bg-subtle: #1a1917;
+  --bg-elevated: #1c1b19;
+  --bg-nav: rgba(20, 19, 17, 0.9);
+  --border: #2a2825;
+  --border-strong: #3a3733;
+  --text-primary: #f2eee8;
+  --text-secondary: #a19d96;
+  --text-muted: #7e7a73;
+  --text-inverse: #141311;
+  --wa-chat: #ece5dd;
+  --brand: #e4572e;
+  --ink: #f2eee8;
+  --on-ink: #141311;
+  --accent: #c8471f;
+  --accent-soft: #e4572e;
+  --surface: #1c1b19;
+  --block: #221f1c;
+  --nav-bg: rgba(28, 27, 25, 0.75);
+  --nav-bg-solid: rgba(28, 27, 25, 0.95);
+  --dot: rgba(242, 238, 232, 0.07);
+  --shadow-color: 0, 0, 0;
+  --frame: #1a1917;
+  --phone-bezel: #3a3835;
+  --phone-ring: rgba(242,238,232,0.22);
+  color-scheme: dark;
 }
 
 html {

@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@iconify/react";
 import { LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
 import Brand from "@/components/Brand";
 
@@ -75,10 +76,21 @@ export default function Footer() {
                 href="https://www.carlosgallardo.dev/"
                 target="_blank"
                 rel="noreferrer"
-                className="font-medium transition-colors hover:text-ink"
+                className="inline-flex items-center gap-1.5 font-medium transition-colors hover:text-ink"
                 style={{ color: "var(--text-secondary)" }}
               >
-                Propiedad de Carlos Gallardo
+                carlosgallardo.dev
+              </a>
+              <a
+                href="https://www.instagram.com/carlosglabs/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram de Carlos Gallardo"
+                className="inline-flex items-center gap-1.5 font-medium transition-colors hover:text-ink"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                <Icon icon="mdi:instagram" width={16} height={16} />
+                @carlosglabs
               </a>
             </div>
           </div>

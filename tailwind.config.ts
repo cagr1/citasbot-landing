@@ -13,9 +13,12 @@ const config: Config = {
           from: "#C8471F", // transitorio: hasta rediseñar cada sección
           to: "#C8471F", // transitorio: hasta rediseñar cada sección
         },
-        paper: "#FAF8F5",
-        ink: "#17181C",
-        line: "#E7E3DC",
+        paper: "var(--bg)",
+        ink: "var(--ink)",
+        line: "var(--border)",
+        surface: "var(--surface)",
+        "on-ink": "var(--on-ink)",
+        block: "var(--block)",
         accent: {
           DEFAULT: "#C8471F",
           hover: "#B03E1B",

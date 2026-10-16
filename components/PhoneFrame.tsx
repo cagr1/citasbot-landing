@@ -56,16 +56,22 @@ export default function PhoneFrame({
 }) {
   return (
     <div
-      className={`relative rounded-[3rem] bg-[#121316] p-[10px] ${className}`}
+      className={`relative rounded-[3rem] bg-[var(--phone-bezel)] p-[10px] ${className}`}
       style={{
         boxShadow:
-          "0 30px 60px -20px rgba(23,24,28,0.35), 0 0 0 1px rgba(255,255,255,0.06) inset",
-      }}
+          "0 30px 60px -20px rgba(var(--shadow-color),0.45), 0 0 0 1px var(--phone-ring), 0 0 0 1px rgba(255,255,255,0.06) inset",
+        "--text-primary": "#17181c",
+        "--text-secondary": "#5e5f66",
+        "--text-muted": "#76777d",
+        "--border": "#e7e3dc",
+        "--ink": "#17181c",
+        "--on-ink": "#ffffff",
+      } as React.CSSProperties}
     >
       {/* Botones laterales */}
-      <div aria-hidden className="absolute -left-[3px] top-24 h-10 w-[3px] rounded-l bg-[#121316]" />
-      <div aria-hidden className="absolute -left-[3px] top-40 h-16 w-[3px] rounded-l bg-[#121316]" />
-      <div aria-hidden className="absolute -right-[3px] top-32 h-20 w-[3px] rounded-r bg-[#121316]" />
+      <div aria-hidden className="absolute -left-[3px] top-24 h-10 w-[3px] rounded-l bg-[var(--phone-bezel)]" />
+      <div aria-hidden className="absolute -left-[3px] top-40 h-16 w-[3px] rounded-l bg-[var(--phone-bezel)]" />
+      <div aria-hidden className="absolute -right-[3px] top-32 h-20 w-[3px] rounded-r bg-[var(--phone-bezel)]" />
 
       <div className="relative overflow-hidden rounded-[2.4rem]" style={{ background: "#EFEAE2" }}>
         {/* Isla dinámica */}
@@ -93,7 +99,7 @@ export default function PhoneFrame({
           style={{ background: "#F7F7F7", borderBottom: "1px solid rgba(0,0,0,0.06)" }}
         >
           <Icon icon="mdi:chevron-left" className="h-6 w-6 shrink-0" style={{ color: BLUE }} />
-          <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-medium text-white">
+          <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-[#17181C] text-[11px] font-medium text-white">
             CS
           </div>
           <div className="min-w-0 flex-1">

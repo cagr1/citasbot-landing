@@ -117,7 +117,7 @@ function Typing() {
 }
 
 const CARD_STYLE = {
-  boxShadow: "0 12px 30px -12px rgba(23,24,28,0.25)",
+  boxShadow: "0 12px 30px -12px rgba(var(--shadow-color),0.25)",
 };
 
 function FloatCard({
@@ -150,7 +150,7 @@ function FloatCard({
             <m.div
               animate={reduce ? undefined : { y: [0, -6, 0] }}
               transition={{ duration, ease: "easeInOut", repeat: Infinity, delay: offset }}
-              className="rounded-2xl border border-line bg-white/90 px-3.5 py-2.5 backdrop-blur"
+              className="rounded-2xl border border-line bg-surface px-3.5 py-2.5 backdrop-blur"
               style={CARD_STYLE}
             >
               {children}

@@ -71,7 +71,7 @@ export default function Hero() {
           aria-hidden
           className="pointer-events-none absolute inset-0"
           style={{
-            backgroundImage: "radial-gradient(rgba(23,24,28,0.09) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(var(--dot) 1px, transparent 1px)",
             backgroundSize: "22px 22px",
             maskImage: "radial-gradient(ellipse 60% 60% at 70% 40%, black, transparent)",
             WebkitMaskImage: "radial-gradient(ellipse 60% 60% at 70% 40%, black, transparent)",
@@ -153,7 +153,7 @@ export default function Hero() {
                 rel="noreferrer"
                 data-track="whatsapp_click"
                 data-track-location="hero"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-white px-6 py-3.5 text-sm font-medium text-ink transition-colors hover:border-[var(--border-strong)]"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-6 py-3.5 text-sm font-medium text-ink transition-colors hover:border-[var(--border-strong)]"
               >
                 <Icon icon="ic:baseline-whatsapp" className="h-5 w-5" style={{ color: "#25D366" }} />
                 Escríbenos por WhatsApp
