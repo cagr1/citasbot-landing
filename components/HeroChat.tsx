@@ -2,6 +2,7 @@
 
 import { AnimatePresence, LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import PhoneFrame from "./PhoneFrame";
 
 type Msg = {
   id: string;
@@ -235,37 +236,15 @@ export default function HeroChat() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div
-        ref={rootRef}
-        className="relative w-[270px] rounded-[2.25rem] border border-line bg-white p-2.5 sm:w-[300px] lg:w-[330px]"
-      >
-        <div
-          className="overflow-hidden rounded-[1.75rem]"
-          style={{ background: "var(--wa-chat)" }}
-        >
-          <div className="flex items-center gap-3 px-4 py-3" style={{ background: "#F0F2F5" }}>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-xs font-medium text-white">
-              CS
-            </div>
-            <div>
-              <div className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-                Clínica Sonrisa
-              </div>
-              <div className="text-xs" style={{ color: "var(--text-muted)" }}>
-                en línea
-              </div>
-            </div>
-          </div>
-
-          <div className="flex h-[340px] lg:h-[400px] flex-col justify-end gap-1.5 overflow-hidden p-3 text-[13px] leading-snug">
-            <AnimatePresence initial={false}>
-              {msgs.map((msg) => (
-                <Bubble key={msg.id} msg={msg} picked={picked} />
-              ))}
-              {typing && <Typing key="typing" />}
-            </AnimatePresence>
-          </div>
-        </div>
+      <div ref={rootRef} className="relative w-[270px] sm:w-[300px] lg:w-[330px]">
+        <PhoneFrame className="w-full" screenClassName="h-[340px] lg:h-[400px]">
+          <AnimatePresence initial={false}>
+            {msgs.map((msg) => (
+              <Bubble key={msg.id} msg={msg} picked={picked} />
+            ))}
+            {typing && <Typing key="typing" />}
+          </AnimatePresence>
+        </PhoneFrame>
 
         <Card show={cards >= 1} dot="#1F9D55" className="-left-20 top-28">
           Cita confirmada
