@@ -26,6 +26,9 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
     dashboard en 3D y fotos; precios con interruptor y borde animado; demo en bloque oscuro; FAQ; pie con wordmark.
   - Siguiente: revisión del usuario; captura real del dashboard (sustituye `DashboardMock` en `components/Features.tsx`);
     Lighthouse móvil (presupuesto ≥ 90); borrar `hooks/useFadeIn.ts` si sigue sin uso.
+  - Logo nuevo aplicado (`public/citasbot-simbolo.svg` y `citasbot-logo-horizontal.svg`): navbar, pie, favicon,
+    apple-icon e imagen OG/Twitter. Pendiente: llevar logo y paleta al dashboard (`../citasbot-whatsapp`) y
+    pasar `privacy-policy.html`/`terms.html` (siguen con el estilo oscuro antiguo) a la nueva paleta.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como
