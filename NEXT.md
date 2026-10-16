@@ -14,14 +14,15 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
 - **Sin desplegar.**
 
 ## Siguiente paso
-- Hecho: spec 02 (región invisible, navbar `lg:`, enlace "Ver precios en USD/€" al pie de los precios).
-  Verificado con build, curl ES/MX, navegador a 375/800/1024/1280 px y clic del enlace (cookie `cb_region`).
-- Lo siguiente es el rediseño visual (punto 3 del lote), bloqueado por las referencias y capturas.
-  Lo que no depende de ellas: el punto 4 (RGPD de `privacy-policy.html`/`terms.html`) y el punto 5.
+- Hecho: spec 02 (región invisible, navbar `lg:`) y punto 4 (privacidad y términos para el RGPD).
+- Lo siguiente es el rediseño visual (punto 3), bloqueado por las referencias y capturas. Sin bloqueo: el punto 5.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como
       `[PENDIENTE]` en `app/aviso-legal/page.tsx`. Conviene completarlos antes de desplegar.
+- [ ] `[PENDIENTE]` en `public/privacy-policy.html`: representante UE (art. 27) y región de Supabase.
+- [ ] Que un abogado de RGPD revise privacidad y términos (borrador sin verificar en fuentes oficiales).
+      Faltan también la ley aplicable y la jurisdicción en `terms.html`.
 - [ ] Referencias (2–3 landings) y capturas reales del dashboard y del flujo de WhatsApp. Bloquean el rediseño visual.
 - [ ] Contestar al lead **Citas Express ES** (+34 617 27 09 11), una gestoría de citas de extranjería/DGT.
       Preguntarle qué necesita. Su agenda y su atención por WhatsApp encajan; capturar citas en webs
@@ -36,7 +37,11 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
    - features en layout asimétrico
    - otra tipografía
    - capturas reales del producto
-4. Revisar `public/privacy-policy.html` y `terms.html` para el RGPD (encargado del tratamiento, subencargados).
+4. ~~Privacidad y términos para el RGPD~~ (hecho). Compromisos publicados que el backend debe cumplir:
+   - borrar o devolver los datos de clientes finales en ≤ 30 días al terminar el contrato
+   - solicitudes de demo ≤ 12 meses; registros técnicos ≤ 90 días
+   - avisar a los clientes antes de añadir un subencargado. Añadir Anthropic al lanzar la IA de Pro,
+     y Paddle al activar el cobro.
 5. Detalles: el precio LATAM sale como "USD 12" (`Intl` es-419). Valorar "US$ 12".
 
 ## Backend (`../citasbot-whatsapp`, sesión propia, después del landing)

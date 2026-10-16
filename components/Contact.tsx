@@ -249,6 +249,11 @@ export default function Contact({ region }: { region: Region }) {
                     </a>
                   </span>
                 </label>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  Responsable: Carlos Gallardo (CitasBot). Finalidad: responder a tu solicitud de demo.
+                  Legitimación: tu solicitud. Destinatario: Resend (envío de correo, EE. UU.). Derechos:
+                  acceso, supresión y los demás que explica la política, en hello@citasbot.app.
+                </p>
 
                 {state.message && !state.success && (
                   <p className="text-sm" style={{ color: "#ef4444" }}>
