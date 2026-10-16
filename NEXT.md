@@ -1,55 +1,81 @@
-# NEXT — Rediseño landing CitasBot (España + LATAM)
+# NEXT — Landing CitasBot (España + LATAM)
 
-Objetivo: landing de SaaS profesional, sin huella "AI", que convierta a leads de España y LATAM.
+Handoff del 2026-10-16. Objetivo: landing de SaaS profesional, sin huella "AI", que convierta a leads
+de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-whatsapp`).
 
-## Bloqueado por el usuario
-- [ ] Referencias: 2–3 landings que le gusten.
-- [ ] Capturas reales del dashboard y del flujo de WhatsApp.
-- [ ] Precios en € para España; ¿LATAM sigue en USD (12 / 25 actual)?
-- [ ] Datos para el Aviso legal (titular, NIF/RUC, domicilio, email).
+## Estado
+- Rama `feat/region-demo-legal` (sin push), con el commit `bcf1497`:
+  - región por ubicación (`lib/region.ts`): cookie `cb_region` > `x-vercel-ip-country` > `Accept-Language`
+  - precios EU 19/39 € + IVA, LATAM USD 12/25
+  - CTA "Solicitar demo" con formulario ampliado
+  - banner de cookies (GTM solo tras aceptar)
+  - `/aviso-legal` y `/cookies`
+  - Verificado con build, curl ES/MX y navegador en móvil.
+- **Sin desplegar.**
 
-## Hallazgos 2026-10-16 (app real: ../citasbot-whatsapp)
-- El bot funciona con menús y reglas, sin LLM: no aplica la transparencia de la Ley de IA de la UE (art. 50). Aun así conviene presentarlo como "asistente automático".
-- Cobro: USD, transferencia manual o Stripe opcional. Stripe directo no está disponible en Ecuador.
-  Hay un proveedor Paddle (MoR) en `lib/billing/providers/paddle.ts` (443 líneas), sin probar.
-- Faltan para España: IVA, NIF o dirección fiscal, numeración y PDF de facturas, alta autoservicio, Madrid en
-  `app/dashboard/configuracion/page.tsx:447`, locale `es-EC`, DPA del art. 28 y registro del opt-in de WhatsApp.
-- Investigación de normas y competencia: `scratchpad/investigar-ue.md` de la sesión. Lo fiscal y lo RGPD están sin verificar en
-  fuentes oficiales; antes de cobrar hay que validarlo con un asesor.
+## Siguiente paso: spec 02 (pendiente de aplicar)
+`specs/02-navbar-region-invisible.md`:
+- quitar el selector de región del navbar (el usuario quiere detección invisible)
+- arreglar el navbar entre 768 y 1024 px (pasar de `md:` a `lg:`)
+- dejar solo un enlace discreto "Ver precios en USD/€" al pie de los precios
 
-## Decisiones abiertas
-- Canal de cobro UE: Paddle (MoR, ya hay código) o una LLC con Stripe. Recomendado: Paddle.
-- España: solo B2B (NIF obligatorio, "+ IVA") o también consumidores. Recomendado: solo B2B.
-- Precios en €: propuesta Starter 19 €, Pro 39 €, + IVA, con 14 días de prueba.
+**Bloqueo**: el clasificador de auto mode deniega `~/.agent-method/bin/delegate` ("Auto-Mode Bypass").
+- Opción 1: el usuario añade un permiso en settings, por ejemplo `Bash(~/.agent-method/bin/delegate *)`.
+- Opción 2: el usuario autoriza al cerebro a editar directamente.
+- La regla del "ejecutor delegado" ya está añadida en `MemoriesMD/method/rules.md` (Un árbol, un escritor).
 
-## Coste por cliente España (estimado, sin verificar)
-- Paddle: 5 % + 0,50 USD por cobro (dato de memoria, confirmar en paddle.com/pricing).
-- Meta: ~0,03 € por recordatorio enviado fuera de la ventana de 24 h. Si el negocio paga su propia WABA, ese coste no es nuestro.
-- IA en Pro (Claude Haiku 5.5, 0,10/0,50 USD por 1M tokens de entrada/salida): ~0,005 USD por conversación → 1–3 €/mes.
-- Vercel Hobby no permite uso comercial: hay que pasar a Pro (20 USD/mes) antes de cobrar.
+Verificación del spec 02:
+- `npm run build`
+- curl con `x-vercel-ip-country` ES/MX
+- navegador a 375, 800 y 1280 px
 
-## Lead activo
-- Citas Express ES (+34 617 27 09 11): gestoría de citas de extranjería/DGT. Confirmar qué necesita:
-  su propia agenda y atención por WhatsApp sí encaja; capturar citas en webs oficiales no lo ofrecemos.
+## Pendiente del usuario
+- [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como
+      `[PENDIENTE]` en `app/aviso-legal/page.tsx`. Conviene completarlos antes de desplegar.
+- [ ] Referencias (2–3 landings) y capturas reales del dashboard y del flujo de WhatsApp. Bloquean el rediseño visual.
+- [ ] Contestar al lead **Citas Express ES** (+34 617 27 09 11), una gestoría de citas de extranjería/DGT.
+      Preguntarle qué necesita. Su agenda y su atención por WhatsApp encajan; capturar citas en webs
+      oficiales no lo ofrecemos. Para el primer cliente: alta manual, factura B2B y precio fundador.
 
-## Lote
-1. **Región y moneda**: selector ES / LATAM (€ / USD). Detección inicial por `Accept-Language`/geo,
-   que el usuario puede cambiar después; precios en `components/Pricing.tsx:6`. Copy con
-   variantes por región solo donde haga falta (ejemplos de negocio, tono).
-2. **Legal y RGPD (ES)**: hoy GTM carga sin consentimiento (`app/layout.tsx`, `GoogleTagManager`).
-   Hace falta un banner de cookies que bloquee GTM y Analytics hasta que el usuario acepte.
-   También Aviso legal, y revisar `public/privacy-policy.html` y `terms.html` para el RGPD.
-   `locale: "es_EC"` → `es_ES` / `es_419` según región.
-3. **Rediseño visual** (checklist: `taste-skill/skills/redesign-skill`):
-   - quitar el degradado azul-violeta como protagonista y dejar un solo acento
-   - quitar el pill de badge del hero
-   - pasar de la fila de 3 features a un layout asimétrico
-   - cambiar la tipografía (Plus Jakarta → candidata Geist/Satoshi)
-   - poner capturas reales del producto en el hero
-4. **Captura de leads**: CTA a demo/WhatsApp con respuesta rápida; revisar
-   `app/actions/contact.ts` (Resend) para que avise al momento.
+## Lote landing (orden)
+1. ~~Región, precios, CTA de demo, legal y cookies~~ (hecho, `bcf1497`).
+2. Spec 02: región invisible y navbar responsive.
+3. Rediseño visual (cuando lleguen las referencias), con el checklist de `taste-skill/skills/redesign-skill`:
+   - un solo acento en vez del degradado azul-violeta
+   - sin pill en el hero
+   - features en layout asimétrico
+   - otra tipografía
+   - capturas reales del producto
+4. Revisar `public/privacy-policy.html` y `terms.html` para el RGPD (encargado del tratamiento, subencargados).
+5. Detalles: el precio LATAM sale como "USD 12" (`Intl` es-419). Valorar "US$ 12".
 
-## Verificación
-- `npm run build` sin errores.
-- Revisión visual en móvil y escritorio, en ambos temas y en ambas regiones.
-- GTM no carga antes de aceptar las cookies (comprobar en la pestaña de red).
+## Backend (`../citasbot-whatsapp`, sesión propia, después del landing)
+- **Cobro en €**:
+  - Paddle como MoR; ya hay `lib/billing/providers/paddle.ts`, sin probar. Stripe directo no admite Ecuador.
+  - Confirmar que Paddle acepta vendedores de Ecuador y su comisión (de memoria: 5 % + 0,50 USD).
+  - Recomendado: España solo B2B, con NIF obligatorio y precios "+ IVA".
+- **Datos fiscales**: NIF y dirección del cliente, numeración y PDF de facturas.
+- **Región**:
+  - Madrid en `app/dashboard/configuracion/page.tsx:447`
+  - locale `es-EC` fijo en `lib/whatsapp/send-message.ts:208`
+  - idioma por negocio
+- **IA en Pro**: Claude Haiku 5.5, acotada al negocio. Prompt de sistema con los datos del negocio y
+  herramientas cerradas: disponibilidad, reservar, cancelar. Fuera de eso, deriva a un humano.
+  Debe decir que es un asistente automático (Ley de IA de la UE, art. 50).
+  Coste estimado: ~0,005 USD por conversación.
+- **RGPD**: DPA del art. 28 con cada negocio y registro del opt-in de WhatsApp. Región de Supabase/Vercel sin confirmar.
+- **Infra**: Vercel Hobby prohíbe el uso comercial; pasar a Pro antes de cobrar.
+- Falta un cron `ACTIVE → PAST_DUE`; ver `../citasbot-whatsapp/NEXT.md` §1.
+
+## Referencias
+- Investigación de normas UE/España y competencia: `docs/investigacion-ue-2026-10-16.md`.
+  Lo fiscal y lo RGPD están sin verificar en fuentes oficiales; validarlo con un asesor antes de cobrar.
+- Coste y margen estimados por cliente en España:
+  - Starter 19 € → ~15 € de margen
+  - Pro 39 € → ~26–28 € de margen
+  - Incluye Paddle, Meta (~0,03 € por recordatorio fuera de la ventana de 24 h) y la IA.
+- Competencia en España: Booksy 34,99 € + IVA, Koibox desde 40 €, Doctoralia desde 69 €.
+
+## Herramientas (método)
+- Bug en `~/.agent-method/bin/delegate:172`: `--tools` es variádico y se traga el prompt, así que el rol
+  `investigar` falla siempre. Arreglo: poner el prompt antes de `--tools`, o usar `--tools=...`. Va en `MemoriesMD/method`.
