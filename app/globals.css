@@ -67,3 +67,27 @@ body {
 .stagger-children.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 240ms; }
 .stagger-children.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 320ms; }
 .stagger-children.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 400ms; }
+
+/* Cinta de tipos de negocio */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

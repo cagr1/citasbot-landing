@@ -2,6 +2,7 @@
 
 import { AnimatePresence, LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import GridFrame from "./GridFrame";
 import PhoneFrame, { ChatBubble } from "./PhoneFrame";
 
 const AUTO_MS = 5000;
@@ -188,6 +189,23 @@ export default function HowItWorks() {
         transition: { duration: 0.3 },
       };
 
+  const reveal = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-15%" },
+          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay },
+        };
+
+  const numberMotion = {
+    initial: reduce ? false : { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0 },
+    transition: { duration: reduce ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] as const },
+  };
+
   const phone = (className: string) => (
     <PhoneFrame className={className} screenClassName="h-[400px]">
       <div className="flex h-full flex-col justify-end gap-1.5 overflow-hidden">
@@ -209,16 +227,24 @@ export default function HowItWorks() {
       <section
         id="como-funciona"
         ref={sectionRef}
-        className="px-6 py-20 lg:px-8 lg:py-28"
+        className="relative px-6 py-20 lg:px-8 lg:py-28"
         style={{ background: "var(--bg)" }}
       >
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.08] tracking-[-0.02em]">
+        <GridFrame />
+        <div className="relative mx-auto max-w-6xl">
+          <m.h2
+            {...reveal(0)}
+            className="text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.08] tracking-[-0.02em]"
+          >
             Así funciona
-          </h2>
-          <p className="mt-4 max-w-[32rem] text-lg" style={{ color: "var(--text-secondary)" }}>
+          </m.h2>
+          <m.p
+            {...reveal(0.1)}
+            className="mt-4 max-w-[32rem] text-lg"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Del primer mensaje a la cita, sin que toques el teléfono.
-          </p>
+          </m.p>
 
           {/* Escritorio */}
           <div className="mt-16 hidden gap-16 lg:grid lg:grid-cols-[minmax(0,1fr)_auto]">
@@ -248,9 +274,29 @@ export default function HowItWorks() {
                   }`}
                   style={{ opacity: i === active ? 1 : 0.35 }}
                 >
-                  <span className="text-sm tabular-nums" style={{ color: "var(--text-muted)" }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                  <div className="relative h-20">
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      {i === active ? (
+                        <m.span
+                          key="big"
+                          {...numberMotion}
+                          className="absolute bottom-0 left-0 text-[5rem] font-medium leading-none tabular-nums"
+                          style={{ color: "var(--accent-soft)" }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </m.span>
+                      ) : (
+                        <m.span
+                          key="small"
+                          {...numberMotion}
+                          className="absolute bottom-0 left-0 text-sm tabular-nums"
+                          style={{ color: "var(--text-muted)" }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </m.span>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   <h3 className="mt-2 text-3xl font-medium tracking-[-0.02em] lg:text-4xl">{step.title}</h3>
                   <p
                     className="mt-2 max-w-[26rem] text-lg"

@@ -1,8 +1,17 @@
 "use client";
 
-import { AnimatePresence, LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import PhoneFrame from "./PhoneFrame";
+import { Icon } from "@iconify/react";
+import {
+  AnimatePresence,
+  LazyMotion,
+  domAnimation,
+  m,
+  useReducedMotion,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import PhoneFrame, { BUBBLE_SHADOW, BubbleTime } from "./PhoneFrame";
 
 type Msg = {
   id: string;
@@ -55,7 +64,7 @@ function Bubble({ msg, picked }: { msg: Msg; picked: boolean }) {
       className={`rounded-lg px-2.5 py-1.5 ${
         client ? "ml-auto max-w-[80%] bg-[#D9FDD3]" : "mr-auto max-w-[85%] bg-white"
       }`}
-      style={{ color: "var(--text-primary)" }}
+      style={{ color: "var(--text-primary)", boxShadow: BUBBLE_SHADOW }}
     >
       <div>{title}</div>
       {msg.body && <div className="mt-1">{msg.body}</div>}
@@ -79,6 +88,7 @@ function Bubble({ msg, picked }: { msg: Msg; picked: boolean }) {
           })}
         </div>
       )}
+      <BubbleTime client={client} />
     </m.div>
   );
 }
@@ -91,6 +101,7 @@ function Typing() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
       className="mr-auto flex gap-1 rounded-lg bg-white px-2.5 py-2.5"
+      style={{ boxShadow: BUBBLE_SHADOW }}
       aria-label="escribiendo"
     >
       {[0, 1, 2].map((i) => (
@@ -104,32 +115,76 @@ function Typing() {
   );
 }
 
-function Card({ show, className, dot, children }: {
-  show: boolean;
+const CARD_STYLE = {
+  boxShadow: "0 12px 30px -12px rgba(23,24,28,0.25)",
+};
+
+function FloatCard({
+  show = true,
+  y,
+  className,
+  duration,
+  offset,
+  reduce,
+  children,
+}: {
+  show?: boolean;
+  y: MotionValue<number>;
   className: string;
-  dot: string;
-  children: string;
+  duration: number;
+  offset: number;
+  reduce: boolean | null;
+  children: ReactNode;
 }) {
   return (
-    <AnimatePresence>
-      {show && (
-        <m.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.35 }}
-          className={`absolute hidden items-center gap-2 rounded-xl border border-line bg-white px-3 py-2 text-xs font-medium text-ink sm:flex ${className}`}
-        >
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: dot }} />
-          {children}
-        </m.div>
-      )}
-    </AnimatePresence>
+    <m.div style={{ y }} className={`absolute hidden sm:block ${className}`}>
+      <AnimatePresence>
+        {show && (
+          <m.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            <m.div
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration, ease: "easeInOut", repeat: Infinity, delay: offset }}
+              className="rounded-2xl border border-line bg-white/90 px-3.5 py-2.5 backdrop-blur"
+              style={CARD_STYLE}
+            >
+              {children}
+            </m.div>
+          </m.div>
+        )}
+      </AnimatePresence>
+    </m.div>
   );
 }
 
-export default function HeroChat() {
+function StatusCard({ icon, color, children }: { icon: string; color: string; children: string }) {
+  return (
+    <div className="flex items-center gap-2 whitespace-nowrap text-xs font-medium text-ink">
+      <Icon icon={icon} className="h-4 w-4" style={{ color }} />
+      {children}
+    </div>
+  );
+}
+
+export default function HeroChat({
+  progress,
+  rotateX,
+  rotateY,
+}: {
+  progress: MotionValue<number>;
+  rotateX: MotionValue<number>;
+  rotateY: MotionValue<number>;
+}) {
   const reduce = useReducedMotion();
+  const phoneY = useTransform(progress, [0, 1], [0, reduce ? 0 : -60]);
+  const panelY = useTransform(progress, [0, 1], [0, reduce ? 0 : 50]);
+  const card1Y = useTransform(progress, [0, 1], [0, reduce ? 0 : -140]);
+  const card2Y = useTransform(progress, [0, 1], [0, reduce ? 0 : -90]);
+  const card3Y = useTransform(progress, [0, 1], [0, reduce ? 0 : -40]);
   const rootRef = useRef<HTMLDivElement>(null);
 
   // El primer render (SSR) es el estado final completo.
@@ -192,15 +247,13 @@ export default function HeroChat() {
     };
 
     const run = async () => {
-      setMsgs([]);
+      // El primer mensaje del cliente siempre queda visible.
+      setMsgs([M1]);
       setTyping(false);
       setPicked(false);
       setCards(0);
 
       while (!cancelled) {
-        await sleep(GAP);
-        if (cancelled) return;
-        push(M1);
         await business(M2);
         if (cancelled) return;
         await sleep(GAP);
@@ -218,7 +271,7 @@ export default function HeroChat() {
         await sleep(3500);
         if (cancelled) return;
         setCards(0);
-        setMsgs([]);
+        setMsgs([M1]);
         setPicked(false);
         await sleep(GAP);
       }
@@ -236,22 +289,82 @@ export default function HeroChat() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div ref={rootRef} className="relative w-[270px] sm:w-[300px] lg:w-[330px]">
-        <PhoneFrame className="w-full" screenClassName="h-[340px] lg:h-[400px]">
-          <AnimatePresence initial={false}>
-            {msgs.map((msg) => (
-              <Bubble key={msg.id} msg={msg} picked={picked} />
-            ))}
-            {typing && <Typing key="typing" />}
-          </AnimatePresence>
-        </PhoneFrame>
+      <div
+        ref={rootRef}
+        className="relative mx-auto h-[540px] w-[300px] sm:h-[560px] lg:h-[600px] lg:w-[420px]"
+      >
+        {/* aquí irá /img/hero.webp cuando exista */}
+        <m.div
+          aria-hidden
+          style={{ y: panelY, backgroundColor: "#F1E4D6" }}
+          className="absolute -right-6 top-14 h-[440px] w-[300px] rotate-[-4deg] rounded-[2.5rem] sm:h-[480px] lg:right-0 lg:h-[500px] lg:w-[340px]"
+        />
 
-        <Card show={cards >= 1} dot="#1F9D55" className="-left-20 top-28">
-          Cita confirmada
-        </Card>
-        <Card show={cards >= 2} dot="var(--accent-soft)" className="-right-8 -bottom-5">
-          Recordatorio programado
-        </Card>
+        <m.div
+          style={{ y: phoneY, rotateX, rotateY, transformPerspective: 1200 }}
+          className="absolute left-0 top-4 w-[300px] lg:w-[320px]"
+        >
+          <m.div
+            animate={reduce ? undefined : { y: [0, -8, 0] }}
+            transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+          >
+            <PhoneFrame className="w-full" screenClassName="h-[300px] sm:h-[320px] lg:h-[400px]">
+              <AnimatePresence initial={false}>
+                {msgs.map((msg) => (
+                  <Bubble key={msg.id} msg={msg} picked={picked} />
+                ))}
+                {typing && <Typing key="typing" />}
+              </AnimatePresence>
+            </PhoneFrame>
+          </m.div>
+        </m.div>
+
+        <FloatCard
+          show={cards >= 1}
+          y={card1Y}
+          reduce={reduce}
+          duration={4}
+          offset={0}
+          className="-left-14 top-12"
+        >
+          <StatusCard icon="mdi:check-circle" color="#1F9D55">
+            Cita confirmada
+          </StatusCard>
+        </FloatCard>
+
+        <FloatCard
+          y={card3Y}
+          reduce={reduce}
+          duration={5}
+          offset={1.2}
+          className="-left-16 top-[44%]"
+        >
+          <div className="flex items-center gap-3">
+            <div className="text-center leading-none">
+              <div className="text-[10px] font-medium" style={{ color: "var(--accent)" }}>
+                JUE
+              </div>
+              <div className="mt-1 text-2xl font-semibold text-ink">23</div>
+            </div>
+            <div className="whitespace-nowrap text-xs">
+              <div className="font-medium text-ink">12:30 · Limpieza dental</div>
+              <div style={{ color: "var(--text-muted)" }}>Laura M.</div>
+            </div>
+          </div>
+        </FloatCard>
+
+        <FloatCard
+          show={cards >= 2}
+          y={card2Y}
+          reduce={reduce}
+          duration={4.5}
+          offset={0.6}
+          className="-right-2 bottom-12 lg:-right-4"
+        >
+          <StatusCard icon="mdi:bell-ring-outline" color="var(--accent-soft)">
+            Recordatorio programado
+          </StatusCard>
+        </FloatCard>
       </div>
     </LazyMotion>
   );

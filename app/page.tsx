@@ -6,8 +6,10 @@ import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
+import Marquee from "@/components/Marquee";
 import Navbar from "@/components/Navbar";
 import Pricing from "@/components/Pricing";
+import StickyCta from "@/components/StickyCta";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { REGION_COOKIE, resolveRegion } from "@/lib/region";
 
@@ -20,15 +22,17 @@ export default async function Home() {
   });
 
   return (
-    <main style={{ background: "var(--bg)", color: "var(--text-primary)" }}>
+    <main className="pt-20" style={{ background: "var(--bg)", color: "var(--text-primary)" }}>
       <Navbar />
       <Hero />
+      <Marquee />
       <HowItWorks />
       <Features />
       <Pricing region={region} />
       <Contact region={region} />
       <CTABanner />
       <Footer />
+      <StickyCta />
       <WhatsAppFloat />
     </main>
   );

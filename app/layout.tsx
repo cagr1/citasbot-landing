@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Instrument_Sans } from "next/font/google";
+import SmoothScroll from "@/components/SmoothScroll";
 import TrackClicks from "@/components/TrackClicks";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning className={instrumentSans.variable}>
       <body className="font-sans antialiased">
+        <SmoothScroll />
         {children}
         <Analytics />
         <TrackClicks />
