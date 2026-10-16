@@ -370,7 +370,7 @@ export default function HeroChat({
           reduce={reduce}
           duration={4.5}
           offset={0.6}
-          className="-right-4 bottom-2"
+          className="-right-20 -bottom-6"
         >
           <StatusCard icon="mdi:bell-ring-outline" color="var(--accent-soft)">
             Recordatorio programado

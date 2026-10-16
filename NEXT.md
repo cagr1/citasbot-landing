@@ -21,10 +21,11 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
   incluye el origen (UTM y referrer). Volver a GA4/GTM solo con anuncios de pago, y entonces con banner y CSP.
 - Rediseño en curso en la rama `feat/rediseno-landing` (sale de `feat/region-demo-legal`, PR #1 sin fusionar).
   Dirección aprobada en `docs/direccion-visual.md`: papel, tinta, acento terracota, Instrument Sans y `motion`.
-  - Hecho: base visual (tokens, fuente, sin modo oscuro), navbar y hero con el chat animado.
-  - Siguiente: "Cómo funciona" con sección fijada al scroll (sustituye a HowItWorks y Features); luego el bento,
-    precios, la demo en bloque oscuro, FAQ y pie.
-  - Transitorio: `brand-gradient` apunta a terracota sólida hasta rediseñar cada sección.
+  - Hecho (3 pasadas): scroll suave (Lenis), navbar en píldora, retícula "+", hero con foto, iPhone realista,
+    tilt 3D, parallax y chat animado; cinta de negocios; "Así funciona" fijado al scroll; bento vivo con
+    dashboard en 3D y fotos; precios con interruptor y borde animado; demo en bloque oscuro; FAQ; pie con wordmark.
+  - Siguiente: revisión del usuario; captura real del dashboard (sustituye `DashboardMock` en `components/Features.tsx`);
+    Lighthouse móvil (presupuesto ≥ 90); borrar `hooks/useFadeIn.ts` si sigue sin uso.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como

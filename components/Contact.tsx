@@ -1,10 +1,15 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
+import { LazyMotion, domAnimation, m, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { useFormStatus } from "react-dom";
 import { sendContactEmail, type ContactState } from "@/app/actions/contact";
+import { WA_URL } from "@/lib/contact";
 import type { Region } from "@/lib/region";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -12,8 +17,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="w-full rounded-full px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-      style={{ background: "linear-gradient(135deg, #4F52FF 0%, #8B3CF7 100%)" }}
+      className="w-full rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
     >
       {pending ? "Enviando..." : "Solicitar demo"}
     </button>
@@ -23,13 +27,11 @@ function SubmitButton() {
 const initialState: ContactState = { success: false, message: "" };
 
 const inputClass =
-  "w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors focus:ring-2 focus:ring-[#4F52FF]/30";
+  "w-full rounded-xl border border-line bg-[var(--bg)] px-4 py-3 text-sm outline-none transition-colors focus:border-ink";
 
-const inputStyle = {
-  background: "var(--bg-subtle)",
-  border: "1px solid var(--border)",
-  color: "var(--text-primary)",
-};
+const inputStyle = { color: "var(--text-primary)" };
+
+const perks = ["Configuración incluida", "Sin permanencia", "Te escribimos en menos de 24 h"];
 
 export default function Contact({ region }: { region: Region }) {
   const [state, action] = useActionState(sendContactEmail, initialState);
@@ -64,64 +66,85 @@ export default function Contact({ region }: { region: Region }) {
     return () => window.removeEventListener("cb-plan", onPlan);
   }, []);
 
+  const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start center"],
+  });
+  const bgScale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
+  const reveal = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-15%" },
+          transition: { duration: 0.6, ease: EASE, delay },
+        };
+
   return (
+    <LazyMotion features={domAnimation}>
     <section
       id="contacto"
-      className="px-6 py-24 lg:px-8"
-      style={{ background: "var(--bg-subtle)" }}
+      ref={sectionRef}
+      className="relative px-6 py-24 lg:px-8 lg:py-32"
     >
-      <div className="mx-auto max-w-5xl">
+      <m.div
+        aria-hidden
+        className="absolute inset-0 mx-4 overflow-hidden rounded-[2.5rem] bg-ink lg:mx-8"
+        style={reduce ? undefined : { scale: bgScale }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
+        />
+      </m.div>
+      <div className="relative mx-auto max-w-5xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
 
           {/* Left — copy */}
-          <div>
-            <p
-              className="mb-3 text-xs font-bold uppercase tracking-widest"
-              style={{ color: "var(--brand)" }}
-            >
-              Contacto
-            </p>
-            <h2
-              className="mb-4 text-3xl font-extrabold tracking-tight lg:text-4xl"
-              style={{ color: "var(--text-primary)", letterSpacing: "-0.03em" }}
-            >
-              ¿Listo para automatizar tu agenda?
+          <m.div {...reveal(0)}>
+            <h2 className="text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.08] tracking-[-0.02em] text-white">
+              Te lo enseñamos con tu negocio
             </h2>
-            <p className="mb-8 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Te escribimos por WhatsApp o email en menos de 24 h.
+            <p className="mt-4 text-lg text-white/70">
+              20 minutos por videollamada. Sin compromiso.
             </p>
-
-            <div className="space-y-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-              <p>
-                También puedes escribirnos directamente a{" "}
-                <a
-                  href="mailto:hello@citasbot.app"
-                  className="font-semibold transition-colors hover:opacity-80"
-                  style={{ color: "var(--brand)" }}
-                >
-                  hello@citasbot.app
-                </a>
-              </p>
-              <p style={{ color: "var(--text-muted)" }}>
-                Respondemos en menos de 24 horas en días hábiles.
-              </p>
-            </div>
-          </div>
+            <ul className="mt-8 flex flex-col gap-3">
+              {perks.map((perk) => (
+                <li key={perk} className="flex items-center gap-2.5 text-white">
+                  <Icon
+                    icon="mdi:check"
+                    className="h-5 w-5 shrink-0"
+                    style={{ color: "var(--accent-soft)" }}
+                  />
+                  {perk}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={WA_URL}
+              target="_blank"
+              rel="noreferrer"
+              data-track="whatsapp_click"
+              data-track-location="contact"
+              className="mt-8 inline-block text-sm text-white/80 underline underline-offset-4 transition-colors hover:text-white"
+            >
+              ¿Prefieres WhatsApp? Escríbenos
+            </a>
+          </m.div>
 
           {/* Right — form */}
-          <div
-            className="rounded-2xl p-8"
-            style={{
-              background: "var(--bg-elevated)",
-              border: "1px solid var(--border)",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.05)",
-            }}
-          >
+          <m.div {...reveal(0.15)} className="rounded-3xl bg-white p-6 lg:p-8">
             {state.success ? (
               <div className="py-10 text-center">
                 <div
                   className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full text-2xl"
-                  style={{ background: "rgba(79,82,255,0.08)" }}
+                  style={{ background: "var(--bg-subtle)", color: "var(--accent)" }}
                 >
                   ✓
                 </div>
@@ -292,9 +315,10 @@ export default function Contact({ region }: { region: Region }) {
                 <SubmitButton />
               </form>
             )}
-          </div>
+          </m.div>
         </div>
       </div>
     </section>
+    </LazyMotion>
   );
 }
