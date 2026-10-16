@@ -1,6 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 import {
   AnimatePresence,
   LazyMotion,
@@ -137,7 +138,7 @@ function FloatCard({
   children: ReactNode;
 }) {
   return (
-    <m.div style={{ y }} className={`absolute hidden sm:block ${className}`}>
+    <m.div style={{ y }} className={`absolute hidden lg:block ${className}`}>
       <AnimatePresence>
         {show && (
           <m.div
@@ -291,18 +292,28 @@ export default function HeroChat({
     <LazyMotion features={domAnimation}>
       <div
         ref={rootRef}
-        className="relative mx-auto h-[540px] w-[300px] sm:h-[560px] lg:h-[600px] lg:w-[420px]"
+        className="relative mx-auto h-[540px] w-[300px] sm:h-[560px] lg:h-[600px] lg:w-[560px]"
       >
-        {/* aquí irá /img/hero.webp cuando exista */}
         <m.div
           aria-hidden
-          style={{ y: panelY, backgroundColor: "#F1E4D6" }}
-          className="absolute -right-6 top-14 h-[440px] w-[300px] rotate-[-4deg] rounded-[2.5rem] sm:h-[480px] lg:right-0 lg:h-[500px] lg:w-[340px]"
-        />
+          style={{ y: panelY }}
+          className="absolute -right-6 top-14 h-[440px] w-[300px] rotate-[-4deg] overflow-hidden rounded-[2.5rem] sm:h-[480px] lg:left-0 lg:right-auto lg:top-0 lg:h-[540px] lg:w-[440px]"
+        >
+          <Image
+            src="/images/hero-recepcionista-clinica.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1024px) 440px, 300px"
+            className="object-cover"
+            style={{ objectPosition: "25% center" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+        </m.div>
 
         <m.div
           style={{ y: phoneY, rotateX, rotateY, transformPerspective: 1200 }}
-          className="absolute left-0 top-4 w-[300px] lg:w-[320px]"
+          className="absolute left-0 top-4 w-[300px] lg:left-auto lg:right-0 lg:top-[120px] lg:w-[320px]"
         >
           <m.div
             animate={reduce ? undefined : { y: [0, -8, 0] }}
@@ -325,7 +336,7 @@ export default function HeroChat({
           reduce={reduce}
           duration={4}
           offset={0}
-          className="-left-14 top-12"
+          className="-left-10 top-12"
         >
           <StatusCard icon="mdi:check-circle" color="#1F9D55">
             Cita confirmada
@@ -337,7 +348,7 @@ export default function HeroChat({
           reduce={reduce}
           duration={5}
           offset={1.2}
-          className="-left-16 top-[44%]"
+          className="-left-6 bottom-24"
         >
           <div className="flex items-center gap-3">
             <div className="text-center leading-none">
@@ -359,7 +370,7 @@ export default function HeroChat({
           reduce={reduce}
           duration={4.5}
           offset={0.6}
-          className="-right-2 bottom-12 lg:-right-4"
+          className="-right-4 bottom-2"
         >
           <StatusCard icon="mdi:bell-ring-outline" color="var(--accent-soft)">
             Recordatorio programado
