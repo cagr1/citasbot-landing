@@ -8,54 +8,34 @@
   <link rel="icon" href="/citasbot-simbolo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script>
-    (function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #ffffff;
-      --bg-subtle: #f7f8fc;
+      --bg: #faf8f5;
+      --bg-subtle: #f3f0ea;
       --surface: #ffffff;
-      --surface-soft: #f7f8fc;
-      --text: #111218;
-      --text-secondary: #44455c;
-      --muted: #8f90a6;
-      --border: rgba(0,0,0,0.08);
-      --border-strong: rgba(0,0,0,0.14);
-      --accent: #4f52ff;
-      --accent-soft: rgba(79,82,255,0.06);
-      --accent-border: rgba(79,82,255,0.22);
-      --accent-text: #3a3dbf;
-      --shadow: 0 12px 40px rgba(15,23,42,0.07);
+      --surface-soft: #f3f0ea;
+      --text: #17181c;
+      --text-secondary: #5e5f66;
+      --muted: #76777d;
+      --border: #e7e3dc;
+      --border-strong: #d6d1c7;
+      --accent: #c8471f;
+      --accent-soft: rgba(200,71,31,0.06);
+      --accent-border: rgba(200,71,31,0.22);
+      --accent-text: #b03e1b;
+      --shadow: 0 12px 40px rgba(23,24,28,0.06);
       --radius: 18px;
     }
 
-    .dark {
-      --bg: #0c0d12;
-      --bg-subtle: #111218;
-      --surface: #1a1b24;
-      --surface-soft: #111218;
-      --text: #ededf2;
-      --text-secondary: #8f90a6;
-      --muted: #5c5d72;
-      --border: rgba(255,255,255,0.07);
-      --border-strong: rgba(255,255,255,0.12);
-      --accent: #7b7fff;
-      --accent-soft: rgba(123,127,255,0.08);
-      --accent-border: rgba(123,127,255,0.22);
-      --accent-text: #a5a7ff;
-      --shadow: 0 12px 40px rgba(0,0,0,0.3);
-    }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
     body {
       margin: 0;
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Instrument Sans', system-ui, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(79,82,255,0.05), transparent 30%),
         var(--bg);
       color: var(--text);
       line-height: 1.7;
