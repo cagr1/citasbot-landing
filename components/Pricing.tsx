@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import RegionSwitch from "@/components/RegionSwitch";
+import RegionLink from "@/components/RegionSwitch";
 import { useFadeIn } from "@/hooks/useFadeIn";
 import type { Region } from "@/lib/region";
 
@@ -116,12 +116,8 @@ export default function Pricing({ region }: { region: Region }) {
           </p>
         </div>
 
-        <div className="mt-8">
-          <RegionSwitch region={region} dark />
-        </div>
-
         {/* Cards */}
-        <div className="mt-8">
+        <div className="mt-12">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan) => (
 
@@ -278,6 +274,8 @@ export default function Pricing({ region }: { region: Region }) {
         >
           Todos los planes incluyen dashboard web, soporte por email y acceso a la API de WhatsApp.
           {region === "eu" && " Precios sin IVA. Facturación a empresas y autónomos."}
+          {" "}
+          <RegionLink region={region} />
         </p>
       </div>
     </section>

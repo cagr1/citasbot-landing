@@ -4,7 +4,7 @@ Handoff del 2026-10-16. Objetivo: landing de SaaS profesional, sin huella "AI", 
 de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-whatsapp`).
 
 ## Estado
-- Rama `feat/region-demo-legal` (sin push), con el commit `bcf1497`:
+- Rama `feat/region-demo-legal` (sin push), con los commits `bcf1497` y el del spec 02:
   - región por ubicación (`lib/region.ts`): cookie `cb_region` > `x-vercel-ip-country` > `Accept-Language`
   - precios EU 19/39 € + IVA, LATAM USD 12/25
   - CTA "Solicitar demo" con formulario ampliado
@@ -13,21 +13,11 @@ de España y LATAM. Después, el backend en su propio proyecto (`../citasbot-wha
   - Verificado con build, curl ES/MX y navegador en móvil.
 - **Sin desplegar.**
 
-## Siguiente paso: spec 02 (pendiente de aplicar)
-`specs/02-navbar-region-invisible.md`:
-- quitar el selector de región del navbar (el usuario quiere detección invisible)
-- arreglar el navbar entre 768 y 1024 px (pasar de `md:` a `lg:`)
-- dejar solo un enlace discreto "Ver precios en USD/€" al pie de los precios
-
-**Bloqueo**: el clasificador de auto mode deniega `~/.agent-method/bin/delegate` ("Auto-Mode Bypass").
-- Opción 1: el usuario añade un permiso en settings, por ejemplo `Bash(~/.agent-method/bin/delegate *)`.
-- Opción 2: el usuario autoriza al cerebro a editar directamente.
-- La regla del "ejecutor delegado" ya está añadida en `MemoriesMD/method/rules.md` (Un árbol, un escritor).
-
-Verificación del spec 02:
-- `npm run build`
-- curl con `x-vercel-ip-country` ES/MX
-- navegador a 375, 800 y 1280 px
+## Siguiente paso
+- Hecho: spec 02 (región invisible, navbar `lg:`, enlace "Ver precios en USD/€" al pie de los precios).
+  Verificado con build, curl ES/MX, navegador a 375/800/1024/1280 px y clic del enlace (cookie `cb_region`).
+- Lo siguiente es el rediseño visual (punto 3 del lote), bloqueado por las referencias y capturas.
+  Lo que no depende de ellas: el punto 4 (RGPD de `privacy-policy.html`/`terms.html`) y el punto 5.
 
 ## Pendiente del usuario
 - [ ] Datos del aviso legal (LSSI art. 10): titular, NIF/RUC y domicilio. Hoy aparecen como
@@ -39,7 +29,7 @@ Verificación del spec 02:
 
 ## Lote landing (orden)
 1. ~~Región, precios, CTA de demo, legal y cookies~~ (hecho, `bcf1497`).
-2. Spec 02: región invisible y navbar responsive.
+2. ~~Spec 02: región invisible y navbar responsive~~ (hecho).
 3. Rediseño visual (cuando lleguen las referencias), con el checklist de `taste-skill/skills/redesign-skill`:
    - un solo acento en vez del degradado azul-violeta
    - sin pill en el hero

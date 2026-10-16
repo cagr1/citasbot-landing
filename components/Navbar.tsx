@@ -4,9 +4,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 
 import Brand from "@/components/Brand";
-import RegionSwitch from "@/components/RegionSwitch";
 import ThemeToggle from "@/components/ThemeToggle";
-import type { Region } from "@/lib/region";
 
 const navLinks = [
   { href: "#como-funciona", label: "Cómo funciona" },
@@ -17,7 +15,7 @@ const navLinks = [
 
 const APP_URL = "https://citasbot-whatsapp.vercel.app";
 
-export default function Navbar({ region }: { region: Region }) {
+export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -34,12 +32,12 @@ export default function Navbar({ region }: { region: Region }) {
         <Brand />
 
         {/* Nav links — weight 400, hover background (Aceternity pattern) */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded px-3 py-1.5 text-sm font-normal transition-colors duration-150"
+              className="whitespace-nowrap rounded px-3 py-1.5 text-sm font-normal transition-colors duration-150"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.background = "var(--bg-subtle)";
@@ -56,12 +54,11 @@ export default function Navbar({ region }: { region: Region }) {
         </nav>
 
         {/* Right actions */}
-        <div className="hidden items-center gap-2 md:flex">
-          <RegionSwitch region={region} />
+        <div className="hidden items-center gap-2 lg:flex">
           <ThemeToggle />
           <a
             href={`${APP_URL}/login`}
-            className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium transition-colors"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition-colors"
             style={{
               color: "var(--text-secondary)",
               border: "1px solid var(--border-strong)",
@@ -79,7 +76,7 @@ export default function Navbar({ region }: { region: Region }) {
           </a>
           <a
             href="#contacto"
-            className="inline-flex items-center justify-center rounded-full bg-brand-gradient px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-brand-gradient px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             style={{
               boxShadow: "rgba(0,0,0,0.1) 0px 1px 3px 0px, rgba(0,0,0,0.06) 0px 1px 2px -1px",
             }}
@@ -89,7 +86,7 @@ export default function Navbar({ region }: { region: Region }) {
         </div>
 
         {/* Mobile toggle */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -108,7 +105,7 @@ export default function Navbar({ region }: { region: Region }) {
       {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="border-t px-6 py-4 md:hidden"
+          className="border-t px-6 py-4 lg:hidden"
           style={{ borderColor: "var(--border)", background: "var(--bg)" }}
         >
           <div className="flex flex-col gap-1">
@@ -123,9 +120,6 @@ export default function Navbar({ region }: { region: Region }) {
                 {link.label}
               </a>
             ))}
-            <div className="mt-2">
-              <RegionSwitch region={region} />
-            </div>
             <a
               href={`${APP_URL}/login`}
               onClick={() => setMenuOpen(false)}

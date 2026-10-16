@@ -21,7 +21,7 @@ export default async function Home() {
 
   return (
     <main style={{ background: "var(--bg)", color: "var(--text-primary)" }}>
-      <Navbar region={region} />
+      <Navbar />
       <Hero />
       <HowItWorks />
       <Features />
