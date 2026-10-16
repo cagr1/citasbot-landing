@@ -92,7 +92,7 @@ export default function Contact({ region }: { region: Region }) {
     >
       <m.div
         aria-hidden
-        className="absolute inset-0 mx-4 overflow-hidden rounded-[2.5rem] bg-ink lg:mx-8"
+        className="absolute inset-0 mx-4 overflow-hidden rounded-[2.5rem] bg-block dark:border dark:border-[var(--border)] lg:mx-8"
         style={reduce ? undefined : { scale: bgScale }}
       >
         <div
@@ -139,7 +139,7 @@ export default function Contact({ region }: { region: Region }) {
           </m.div>
 
           {/* Right — form */}
-          <m.div {...reveal(0.15)} className="rounded-3xl bg-white p-6 lg:p-8">
+          <m.div {...reveal(0.15)} className="rounded-3xl bg-surface p-6 lg:p-8">
             {state.success ? (
               <div className="py-10 text-center">
                 <div

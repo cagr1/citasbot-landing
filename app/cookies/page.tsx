@@ -14,6 +14,10 @@ const items = [
     name: "Vercel Analytics",
     desc: "Estadísticas agregadas de visitas y de clics en los botones principales. No usa cookies ni guarda nada en tu navegador. Proveedor: Vercel Inc.",
   },
+  {
+    name: "theme (localStorage)",
+    desc: "Preferencia: recuerda si eliges modo claro u oscuro con el conmutador. Propia. No se envía a ningún servidor. Exenta de consentimiento.",
+  },
 ];
 
 export default function Cookies() {

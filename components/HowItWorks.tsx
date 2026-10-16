@@ -332,7 +332,7 @@ export default function HowItWorks() {
                         setStopped(true);
                       }}
                       className={`rounded-full border px-3 py-1.5 text-sm ${
-                        on ? "border-ink bg-ink text-white" : "border-line"
+                        on ? "border-ink bg-ink text-on-ink" : "border-line"
                       }`}
                     >
                       {step.title}

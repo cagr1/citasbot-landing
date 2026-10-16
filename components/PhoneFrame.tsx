@@ -60,7 +60,13 @@ export default function PhoneFrame({
       style={{
         boxShadow:
           "0 30px 60px -20px rgba(23,24,28,0.35), 0 0 0 1px rgba(255,255,255,0.06) inset",
-      }}
+        "--text-primary": "#17181c",
+        "--text-secondary": "#5e5f66",
+        "--text-muted": "#76777d",
+        "--border": "#e7e3dc",
+        "--ink": "#17181c",
+        "--on-ink": "#ffffff",
+      } as React.CSSProperties}
     >
       {/* Botones laterales */}
       <div aria-hidden className="absolute -left-[3px] top-24 h-10 w-[3px] rounded-l bg-[#121316]" />
@@ -93,7 +99,7 @@ export default function PhoneFrame({
           style={{ background: "#F7F7F7", borderBottom: "1px solid rgba(0,0,0,0.06)" }}
         >
           <Icon icon="mdi:chevron-left" className="h-6 w-6 shrink-0" style={{ color: BLUE }} />
-          <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-medium text-white">
+          <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-[#17181C] text-[11px] font-medium text-white">
             CS
           </div>
           <div className="min-w-0 flex-1">

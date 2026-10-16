@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 
 import Brand from "@/components/Brand";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
   { href: "#como-funciona", label: "Cómo funciona" },
@@ -34,10 +35,10 @@ export default function Navbar() {
         aria-label="Principal"
         className="mx-auto w-full rounded-full border border-line backdrop-blur-md"
         style={{
-          background: "rgba(255,255,255,0.75)",
+          background: "var(--nav-bg)",
           maxWidth: scrolled ? "56rem" : "72rem",
           padding: scrolled ? "0.5rem 1rem" : "0.625rem 1.25rem",
-          boxShadow: scrolled ? "0 8px 30px rgba(23,24,28,0.08)" : "0 0 0 rgba(23,24,28,0)",
+          boxShadow: scrolled ? "0 8px 30px rgba(var(--shadow-color),0.08)" : "0 0 0 rgba(var(--shadow-color),0)",
           transition:
             "max-width 400ms cubic-bezier(0.22,1,0.36,1), padding 400ms cubic-bezier(0.22,1,0.36,1), box-shadow 400ms",
         }}
@@ -59,6 +60,7 @@ export default function Navbar() {
 
           {/* Right actions */}
           <div className="hidden items-center gap-5 lg:flex">
+            <ThemeToggle />
             <a
               href={`${APP_URL}/login`}
               className={`whitespace-nowrap text-sm font-normal ${linkClass}`}
@@ -69,7 +71,7 @@ export default function Navbar() {
               href="#contacto"
               data-track="demo_click"
               data-track-location="navbar"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-sm font-medium text-white hover:bg-black"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-sm font-medium text-on-ink hover:opacity-90"
             >
               Solicitar demo
             </a>
@@ -77,6 +79,7 @@ export default function Navbar() {
 
           {/* Mobile toggle */}
           <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
@@ -95,8 +98,8 @@ export default function Navbar() {
         <div
           className="mx-auto mt-2 max-w-4xl rounded-3xl border border-line px-4 py-4 lg:hidden"
           style={{
-            background: "rgba(255,255,255,0.92)",
-            boxShadow: "0 8px 30px rgba(23,24,28,0.08)",
+            background: "var(--nav-bg-solid)",
+            boxShadow: "0 8px 30px rgba(var(--shadow-color),0.08)",
           }}
         >
           <div className="flex flex-col gap-1">
@@ -122,7 +125,7 @@ export default function Navbar() {
               data-track="demo_click"
               data-track-location="navbar_mobile"
               onClick={() => setMenuOpen(false)}
-              className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-white hover:bg-black"
+              className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-on-ink hover:opacity-90"
             >
               Solicitar demo
             </a>

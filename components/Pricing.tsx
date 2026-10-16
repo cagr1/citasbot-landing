@@ -112,7 +112,7 @@ function PlanCard({
 
   const card = (
     <article
-      className={`flex h-full flex-col bg-white p-7 ${
+      className={`flex h-full flex-col bg-surface p-7 ${
         plan.popular
           ? "rounded-[calc(1.5rem-1px)]"
           : "rounded-3xl border border-line"
@@ -121,7 +121,7 @@ function PlanCard({
       <div className="flex min-h-[24px] items-center justify-between">
         <h3 className="text-lg font-medium">{plan.name}</h3>
         {plan.popular && (
-          <span className="rounded-full bg-ink px-2.5 py-1 text-[11px] text-white">
+          <span className="rounded-full bg-ink px-2.5 py-1 text-[11px] text-on-ink">
             Recomendado
           </span>
         )}
@@ -176,7 +176,7 @@ function PlanCard({
         className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition-colors ${
           plan.popular
             ? "bg-accent text-white hover:bg-accent-hover"
-            : "border border-line bg-white text-ink hover:border-[var(--border-strong)]"
+            : "border border-line bg-surface text-ink hover:border-[var(--border-strong)]"
         }`}
       >
         Solicitar demo
@@ -263,7 +263,7 @@ export default function Pricing({ region }: { region: Region }) {
           </m.p>
 
           <m.div {...reveal(0.15)} className="mt-10 flex justify-center">
-            <div className="inline-flex rounded-full border border-line bg-white p-1">
+            <div className="inline-flex rounded-full border border-line bg-surface p-1">
               {options.map((o) => (
                 <button
                   key={o.label}
@@ -271,7 +271,7 @@ export default function Pricing({ region }: { region: Region }) {
                   onClick={() => setAnnual(o.value)}
                   aria-pressed={annual === o.value}
                   className="relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
-                  style={{ color: annual === o.value ? "#fff" : "var(--text-primary)" }}
+                  style={{ color: annual === o.value ? "var(--on-ink)" : "var(--text-primary)" }}
                 >
                   {annual === o.value && (
                     <m.div

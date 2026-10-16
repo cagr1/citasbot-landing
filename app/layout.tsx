@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   },
 };
 
+const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}`;
+
 export default function RootLayout({
   children,
 }: {
@@ -36,6 +38,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning className={instrumentSans.variable}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: THEME_SCRIPT,
+          }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <SmoothScroll />
         {children}
